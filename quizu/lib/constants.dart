@@ -2,7 +2,8 @@
 
 import 'package:flutter/material.dart';
 
-const kHourglass = '\u{23F3}';
+// const kHourglass = '\u{23F3}';
+const kHourglass = 'QuizU ⏳';
 const kBottomContainerHeight = 80.0;
 const margin = 15.0;
 const borderRadius = 10.0;
