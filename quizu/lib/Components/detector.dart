@@ -5,7 +5,10 @@ import 'package:flutter/material.dart';
 
 class MyContainer extends StatelessWidget {
   const MyContainer(
-      {super.key, required this.color, this.containerContent, this.onPress});
+      {super.key,
+      required this.color,
+      required this.containerContent,
+      required this.onPress});
   final Color color;
   final Widget? containerContent;
   final VoidCallback? onPress;
@@ -14,7 +17,7 @@ class MyContainer extends StatelessWidget {
     return GestureDetector(
       onTap: onPress,
       child: Container(
-        margin: const EdgeInsets.all(margin),
+        margin: const EdgeInsets.all(10),
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(borderRadius),
           color: color,

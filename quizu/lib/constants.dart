@@ -27,15 +27,18 @@ const kRoundButtonColor = Color(0xFF4C4F5E);
 const kNumberStyle = TextStyle(
   fontSize: 45.0,
   fontWeight: FontWeight.w900,
+  fontFamily: 'TitilliumWeb',
 );
 const kLabelStyle = TextStyle(
   fontSize: 18.0,
   color: Color(0xFF8D8E98),
+  fontFamily: 'TitilliumWeb',
 );
 
 const kLargeButtonStyle = TextStyle(
   fontSize: 25.0,
   fontWeight: FontWeight.bold,
+  fontFamily: 'TitilliumWeb',
 );
 const kQuestion = TextStyle(
   fontSize: 22.0,
@@ -45,15 +48,28 @@ const kResultText = TextStyle(
   color: Color(0xFF24D876),
   fontSize: 22.0,
   fontWeight: FontWeight.bold,
+  fontFamily: 'TitilliumWeb',
 );
 const kAppBarStyle = TextStyle(
-  fontSize: 24.0,
+  fontSize: 28.0,
+  fontFamily: 'TitilliumWeb',
 );
 const kTitleStyle = TextStyle(
   fontSize: 58.0,
+  fontFamily: 'TitilliumWeb',
+);
+const kSubtitleStyle = TextStyle(
+  fontSize: 32.0,
+  fontFamily: 'TitilliumWeb',
 );
 const kBodyStyle = TextStyle(
   fontSize: 22.0,
+  fontFamily: 'TitilliumWeb',
+);
+const kInputStyle = TextStyle(
+  fontSize: 22.0,
+  fontFamily: 'TitilliumWeb',
+  color: Colors.black,
 );
 
 const kInputDecoration = InputDecoration(
@@ -74,7 +90,10 @@ const kMyInputDecoration = InputDecoration(
   filled: true,
   prefixIconConstraints: BoxConstraints(minWidth: 20, maxWidth: 30),
   hintText: 'Mohammad Al Ali',
-  hintStyle: TextStyle(color: Colors.grey),
+  hintStyle: TextStyle(
+    color: Colors.grey,
+    fontFamily: 'TitilliumWeb',
+  ),
   border: OutlineInputBorder(
       borderRadius: BorderRadius.all(
         Radius.circular(10.0),
@@ -82,13 +101,24 @@ const kMyInputDecoration = InputDecoration(
       borderSide: BorderSide.none),
 );
 const kHintStyle = TextStyle(
-  fontSize: 16,
+  fontSize: 22,
+  color: Colors.black,
+  fontFamily: 'TitilliumWeb',
 );
 var kButtonStyle = TextButton.styleFrom(
   backgroundColor: Color.fromARGB(255, 40, 46, 137),
 );
 const kTextButtonStyle = TextStyle(
-  color: Colors.white,
-  fontSize: 20,
+  color: Colors.black,
+  fontSize: 26,
+  fontFamily: 'TitilliumWeb',
 );
-const kChallenge = TextStyle(fontSize: 32);
+const kTextButtonStyle2 = TextStyle(
+  color: Colors.white,
+  fontSize: 26,
+  fontFamily: 'TitilliumWeb',
+);
+const kChallenge = TextStyle(
+  fontSize: 32,
+  fontFamily: 'TitilliumWeb',
+);

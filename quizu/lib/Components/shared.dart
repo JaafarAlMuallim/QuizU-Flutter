@@ -1,34 +1,27 @@
-// ignore_for_file: prefer_const_constructors
+// ignore_for_file: prefer_const_constructors, sized_box_for_whitespace
 
 import 'package:flutter/material.dart';
 import 'package:quizu/constants.dart';
 
-Column sharedColumn(child1, child2) {
-  return Column(
-      mainAxisAlignment: MainAxisAlignment.center,
-      crossAxisAlignment: CrossAxisAlignment.center,
-      children: [
-        const Center(
-          child: Text(
-            'QuizU$kHourglass',
+Widget title() {
+  return Expanded(
+    flex: 2,
+    child: Center(
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Text(
+            'QuizU',
             style: kTitleStyle,
           ),
-        ),
-        const SizedBox(
-          height: 50,
-        ),
-        child1,
-        child2,
-      ]);
-}
-
-Expanded quizuLogo() {
-  return Expanded(
-    flex: 4,
-    child: Center(
-      child: Text(
-        'QuizU$kHourglass',
-        style: kTitleStyle,
+          Container(
+            width: 100,
+            height: 100,
+            child: Image(
+              image: AssetImage('images/hourGlass.png'),
+            ),
+          ),
+        ],
       ),
     ),
   );
