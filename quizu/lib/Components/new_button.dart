@@ -1,26 +1,23 @@
-// ignore_for_file: prefer_if_null_operators
-
-import 'package:quizu/constants.dart';
 import 'package:flutter/material.dart';
+import 'package:quizu/constants.dart';
 
-class MyContainer extends StatelessWidget {
-  const MyContainer(
-      {super.key,
-      required this.color,
-      required this.containerContent,
-      required this.onPress});
-  final Color color;
+class CustomButton extends StatelessWidget {
+  const CustomButton(
+      {super.key, required this.containerContent, required this.onPress});
   final Widget? containerContent;
   final VoidCallback? onPress;
+
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: onPress,
       child: Container(
+        width: 250.0,
+        height: 60.0,
         margin: const EdgeInsets.all(10),
         decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(borderRadius),
-          color: color,
+          borderRadius: BorderRadius.circular(25),
+          color: kButtonColor,
         ),
         child: containerContent,
       ),

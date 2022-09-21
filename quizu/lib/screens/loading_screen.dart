@@ -2,6 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
+import 'package:quizu/screens/leaderboard.dart';
 import 'package:quizu/screens/quiz_me.dart';
 
 import '../Components/networking.dart';
@@ -32,6 +33,23 @@ class _LoadingScreenState extends State<LoadingScreen> {
     );
   }
 
+  void getTop() async {
+    String tops = '';
+    NetworkingHelper helper = NetworkingHelper(mobileNum: '09', otp: '0000');
+    dynamic data = await helper.getTopTen();
+    for (int i = 0; i < 10; i++) {
+      tops += '${data[i]['name']}    ${data[i]['score']}\n';
+    }
+    Navigator.pushReplacement(
+      context,
+      MaterialPageRoute(
+        builder: (context) => LeaderBoard(
+          data: tops,
+        ),
+      ),
+    );
+  }
+
   void showProfile() {}
 
   @override
@@ -43,6 +61,7 @@ class _LoadingScreenState extends State<LoadingScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       body: Center(
         child: SpinKitPouringHourGlass(
           color: Colors.white,

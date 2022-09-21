@@ -17,10 +17,10 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Flutter Demo',
       theme: ThemeData.dark().copyWith(
-        backgroundColor: kActiveContainer,
-        scaffoldBackgroundColor: kActiveContainer,
-        appBarTheme: const AppBarTheme(backgroundColor: kInactiveContainer),
-        canvasColor: kInactiveContainer,
+        backgroundColor: kBackgroundColor,
+        scaffoldBackgroundColor: kBackgroundColor,
+        appBarTheme: const AppBarTheme(backgroundColor: kAppBarColor),
+        canvasColor: kAppBarColor,
       ),
       // home: const MyHomePage(title: 'Flutter Demo Home Page\u{23F3}'),
       home: const MobileEntry(),

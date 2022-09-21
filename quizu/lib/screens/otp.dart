@@ -2,7 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:quizu/Components/detector.dart';
+import 'package:quizu/Components/new_button.dart';
 import 'package:quizu/Components/shared.dart';
 import 'package:quizu/constants.dart';
 import 'package:quizu/screens/name_entry.dart';
@@ -46,78 +46,93 @@ class _OTPShowState extends State<OTPShow> {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-        body: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            title(),
-            Container(
-              margin: EdgeInsets.all(20),
-              child: Center(
-                child: Text(
-                  'Please Enter the OTP Sent to your mobile',
-                  style: kSubtitleStyle,
-                  textAlign: TextAlign.center,
-                ),
-              ),
-            ),
-            Container(
-              margin: EdgeInsets.all(25),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [otpField(), otpField(), otpField(), otpField()],
-              ),
-            ),
-            Expanded(
-              flex: 1,
-              child: Padding(
-                padding: const EdgeInsets.all(40),
-                child: MyContainer(
-                    color: kRoundButtonColor,
-                    containerContent: Center(
+        body: SafeArea(
+          child: Center(
+            child: SingleChildScrollView(
+              physics: BouncingScrollPhysics(),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  title(),
+                  SizedBox(
+                    height: 80,
+                  ),
+                  Container(
+                    margin: EdgeInsets.all(20),
+                    child: Center(
+                      child: Text(
+                        'Please Enter the OTP Sent to your mobile',
+                        style: kSubtitleStyle,
+                        textAlign: TextAlign.center,
+                      ),
+                    ),
+                  ),
+                  SizedBox(
+                    height: 20,
+                  ),
+                  Container(
+                    margin: EdgeInsets.symmetric(horizontal: 25),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        otpField(),
+                        otpField(),
+                        otpField(),
+                        otpField()
+                      ],
+                    ),
+                  ),
+                  SizedBox(
+                    height: 40,
+                  ),
+                  CustomButton(
+                      containerContent: Center(
                         child: Text(
-                      'Check',
-                      style: kTextButtonStyle2,
-                    )),
-                    onPress: () {
-                      if (otp == '0000') {
-                        Navigator.pushReplacement(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => NameEntry(
-                                  mobileNum: widget.mobileNum, otp: otp)),
-                        );
-                      } else {
-                        otp = '';
-                      }
-                    }),
+                          'Check',
+                          style: kTextButtonStyle,
+                        ),
+                      ),
+                      onPress: () {
+                        if (otp == '0000') {
+                          Navigator.pushReplacement(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => NameEntry(
+                                    mobileNum: widget.mobileNum, otp: otp)),
+                          );
+                        } else {
+                          otp = '';
+                        }
+                      }),
+                  // GestureDetector(
+                  //   onTap: () {
+                  //     if (otp == '0000') {
+                  //       Navigator.pushReplacement(
+                  //         context,
+                  //         MaterialPageRoute(
+                  //             builder: (context) =>
+                  //                 NameEntry(mobileNum: widget.mobileNum, otp: otp)),
+                  //       );
+                  //     }
+                  //   },
+                  //   child: Container(
+                  //     margin: const EdgeInsets.all(margin),
+                  //     decoration: BoxDecoration(
+                  //       borderRadius: BorderRadius.circular(borderRadius),
+                  //       color: kInactiveContainer,
+                  //     ),
+                  //     child: Center(
+                  //       child: Text(
+                  //         'Check',
+                  //         style: kTextButtonStyle,
+                  //       ),
+                  //     ),
+                  //   ),
+                  // ),
+                ],
               ),
-            )
-            // GestureDetector(
-            //   onTap: () {
-            //     if (otp == '0000') {
-            //       Navigator.pushReplacement(
-            //         context,
-            //         MaterialPageRoute(
-            //             builder: (context) =>
-            //                 NameEntry(mobileNum: widget.mobileNum, otp: otp)),
-            //       );
-            //     }
-            //   },
-            //   child: Container(
-            //     margin: const EdgeInsets.all(margin),
-            //     decoration: BoxDecoration(
-            //       borderRadius: BorderRadius.circular(borderRadius),
-            //       color: kInactiveContainer,
-            //     ),
-            //     child: Center(
-            //       child: Text(
-            //         'Check',
-            //         style: kTextButtonStyle,
-            //       ),
-            //     ),
-            //   ),
-            // ),
-          ],
+            ),
+          ),
         ),
         // OTPTextField(
         //   length: 4,

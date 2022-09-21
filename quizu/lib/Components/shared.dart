@@ -4,25 +4,22 @@ import 'package:flutter/material.dart';
 import 'package:quizu/constants.dart';
 
 Widget title() {
-  return Expanded(
-    flex: 2,
-    child: Center(
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Text(
-            'QuizU',
-            style: kTitleStyle,
+  return Center(
+    child: Row(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        Text(
+          'QuizU',
+          style: kTitleStyle,
+        ),
+        Container(
+          width: 100,
+          height: 100,
+          child: Image(
+            image: AssetImage('images/hourGlass.png'),
           ),
-          Container(
-            width: 100,
-            height: 100,
-            child: Image(
-              image: AssetImage('images/hourGlass.png'),
-            ),
-          ),
-        ],
-      ),
+        ),
+      ],
     ),
   );
 }

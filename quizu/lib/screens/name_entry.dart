@@ -1,7 +1,7 @@
 // ignore_for_file: prefer_const_constructors
 
 import 'package:flutter/material.dart';
-import 'package:quizu/Components/detector.dart';
+import 'package:quizu/Components/new_button.dart';
 import 'package:quizu/Components/shared.dart';
 import 'package:quizu/constants.dart';
 import 'package:quizu/screens/error.dart';
@@ -20,37 +20,38 @@ class _NameEntryState extends State<NameEntry> {
   String name = '';
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: Scaffold(
-        body: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            title(),
-            SizedBox(height: 40),
-            Text(
-              "What's your name?",
-              style: kTextButtonStyle2,
-            ),
-            SizedBox(height: 40),
-            Container(
-              padding: EdgeInsets.all(20.0),
-              child: TextField(
-                  onChanged: (value) {
-                    name = value;
-                  },
-                  style: kInputStyle,
-                  decoration: kMyInputDecoration),
-            ),
-            Expanded(
-              flex: 1,
-              child: Padding(
-                padding: const EdgeInsets.all(50),
-                child: MyContainer(
-                  color: kRoundButtonColor,
+    return Scaffold(
+      body: SafeArea(
+        child: Center(
+          child: SingleChildScrollView(
+            physics: BouncingScrollPhysics(),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                title(),
+                SizedBox(height: 120),
+                Text(
+                  "What's your name?",
+                  style: kTextStyle,
+                ),
+                SizedBox(height: 50),
+                Container(
+                  padding: EdgeInsets.all(20.0),
+                  child: TextField(
+                      onChanged: (value) {
+                        name = value;
+                      },
+                      style: kInputStyle,
+                      decoration: kMyInputDecoration),
+                ),
+                SizedBox(
+                  height: 50,
+                ),
+                CustomButton(
                   containerContent: Center(
                       child: Text(
                     'Done',
-                    style: kTextButtonStyle2,
+                    style: kTextButtonStyle,
                   )),
                   onPress: () {
                     if (name.isNotEmpty) {
@@ -73,9 +74,9 @@ class _NameEntryState extends State<NameEntry> {
                     }
                   },
                 ),
-              ),
+              ],
             ),
-          ],
+          ),
         ),
       ),
     );
