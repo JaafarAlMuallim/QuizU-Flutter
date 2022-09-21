@@ -8,6 +8,8 @@ const kBackgroundColor = Color(0xFF2E1F46);
 const kButtonColor = Color(0xFF19104E);
 const kAppBarColor = Color(0xFF190E2B);
 const kBottomAppBar = Color(0xFF6436AE);
+const kActivated = Color(0xFF5E6AD9);
+const kInActivated = Color(0xFF636365);
 const kAppBarStyle = TextStyle(
   fontSize: 32.0,
   fontFamily: 'TitilliumWeb',

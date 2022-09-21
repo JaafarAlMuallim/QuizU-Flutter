@@ -56,12 +56,15 @@ class _NameEntryState extends State<NameEntry> {
                   onPress: () {
                     if (name.isNotEmpty) {
                       Navigator.pushReplacement(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => LoadingScreen(
-                                  mobileNum: widget.mobileNum,
-                                  otp: widget.otp,
-                                  name: name)));
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => LoadingScreen(
+                              mobileNum: widget.mobileNum,
+                              otp: widget.otp,
+                              name: name,
+                              data: 'getData'),
+                        ),
+                      );
                     } else {
                       Navigator.push(
                         context,

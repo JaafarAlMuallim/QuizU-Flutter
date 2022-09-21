@@ -12,16 +12,20 @@ class LoadingScreen extends StatefulWidget {
       {super.key,
       required this.mobileNum,
       required this.otp,
-      required this.name});
+      required this.name,
+      required this.data});
   final String mobileNum;
   final String otp;
   final String name;
+  final String data;
+
   @override
   State<LoadingScreen> createState() => _LoadingScreenState();
 }
 
 class _LoadingScreenState extends State<LoadingScreen> {
   void getData() async {
+    print('LOADING');
     NetworkingHelper helper =
         NetworkingHelper(mobileNum: widget.mobileNum, otp: widget.otp);
     dynamic data = await helper.registerName(widget.name);

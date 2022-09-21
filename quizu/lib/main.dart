@@ -22,7 +22,6 @@ class MyApp extends StatelessWidget {
         appBarTheme: const AppBarTheme(backgroundColor: kAppBarColor),
         canvasColor: kAppBarColor,
       ),
-      // home: const MyHomePage(title: 'Flutter Demo Home Page\u{23F3}'),
       home: const MobileEntry(),
     );
   }
