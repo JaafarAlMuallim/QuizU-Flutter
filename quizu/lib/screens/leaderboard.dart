@@ -19,10 +19,10 @@ class _LeaderBoardState extends State<LeaderBoard> {
 
   void getTop() async {
     _isLoading = true;
-    NetworkingHelper helper = NetworkingHelper(mobileNum: '09', otp: '0000');
+    NetworkingHelper helper = NetworkingHelper();
     dynamic data = await helper.getTopTen();
     for (int i = 0; i < 10; i++) {
-      tops += '${data[i]['name']}    ${data[i]['score']}\n';
+      tops += '${data[i]['name']}             ${data[i]['score']}\n';
     }
     setState(() {
       _isLoading = false;
@@ -51,11 +51,17 @@ class _LeaderBoardState extends State<LeaderBoard> {
             : Center(
                 child: SingleChildScrollView(
                   physics: const BouncingScrollPhysics(),
-                  child: Center(
-                    child: Text(
-                      tops,
-                      style: kBodyStyle,
-                    ),
+                  child: Column(
+                    children: [
+                      Text(
+                        'Leaderboard',
+                        style: kTitleStyle,
+                      ),
+                      Text(
+                        tops,
+                        style: kSubtitleStyle,
+                      ),
+                    ],
                   ),
                 ),
               ),

@@ -14,13 +14,13 @@ class ShowProfile extends StatefulWidget {
 }
 
 class _ShowProfileState extends State<ShowProfile> {
-  String name = '';
+  String? name;
   String mobile = '';
   bool _isLoading = false;
 
   void getInfo() async {
     _isLoading = true;
-    NetworkingHelper helper = NetworkingHelper(mobileNum: '09', otp: '0000');
+    NetworkingHelper helper = NetworkingHelper();
     dynamic data = await helper.getUserInfo();
     name = data['name'];
     mobile = data['mobile'];
@@ -59,7 +59,7 @@ class _ShowProfileState extends State<ShowProfile> {
                           style: kTextStyle,
                         ),
                         Text(
-                          'Mobile: $mobile',
+                          'Mobile: +966$mobile',
                           style: kTextStyle,
                         ),
                       ],

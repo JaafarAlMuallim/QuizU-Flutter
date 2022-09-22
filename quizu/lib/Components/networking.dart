@@ -3,31 +3,41 @@
 import 'dart:convert';
 
 import 'package:http/http.dart' as http;
+import 'package:shared_preferences/shared_preferences.dart';
 
 const String loginUrl = 'https://quizu.okoul.com/Login';
 const String nameUrl = 'https://quizu.okoul.com/Name';
 const String boardUrl = 'https://quizu.okoul.com/TopScores';
 const String infoUrl = 'https://quizu.okoul.com/UserInfo';
-const token =
-    'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MjYyLCJpYXQiOjE2NjM2OTk0Mzh9.5qDAy5Zpj1XZfnh9amp0bLisIabChQhx8u13ZAr9hk4';
+// const token =
+// 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MjYyLCJpYXQiOjE2NjM2OTk0Mzh9.5qDAy5Zpj1XZfnh9amp0bLisIabChQhx8u13ZAr9hk4';
+
+// fetchToken() async {
+//   dynamic tokenFuture = await SharedPrefUtils.readPrefStr('token');
+//   return tokenFuture;
+// }
 
 class NetworkingHelper {
-  NetworkingHelper({required this.mobileNum, required this.otp});
-  final String otp;
-  final String mobileNum;
+  static dynamic myToken;
 
-  Future<dynamic> login() async {
+  Future<dynamic> login(String otp, String mobile) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
     http.Response res = await http
-        .post(Uri.parse(loginUrl), body: {'OTP': otp, 'mobile': '09'});
+        .post(Uri.parse(loginUrl), body: {'OTP': '0000', 'mobile': '09'});
     if (res.statusCode >= 200 || res.statusCode < 400) {
       print(res.body);
+      dynamic data = await jsonDecode(res.body);
+      String token = data['token'];
+      print(token);
+      await prefs.setString('token', token);
+      myToken = prefs.getString('token');
       return jsonDecode(res.body);
     }
   }
 
   Future<dynamic> registerName(String name) async {
     http.Response res = await http.post(Uri.parse(nameUrl),
-        body: {'name': 'foo'}, headers: {'Authorization': token});
+        body: {'name': 'foo'}, headers: {'Authorization': myToken});
     if (res.statusCode >= 200 || res.statusCode < 400) {
       print(res.body);
       return jsonDecode(res.body);
@@ -35,8 +45,8 @@ class NetworkingHelper {
   }
 
   Future<dynamic> getTopTen() async {
-    http.Response res =
-        await http.get(Uri.parse(boardUrl), headers: {'Authorization': token});
+    http.Response res = await http
+        .get(Uri.parse(boardUrl), headers: {'Authorization': myToken});
     if (res.statusCode >= 200 || res.statusCode < 400) {
       print(res.body);
       return jsonDecode(res.body);
@@ -44,11 +54,15 @@ class NetworkingHelper {
   }
 
   Future<dynamic> getUserInfo() async {
+    print(myToken);
+    print(infoUrl);
     http.Response res =
-        await http.get(Uri.parse(infoUrl), headers: {'Authorization': token});
+        await http.get(Uri.parse(infoUrl), headers: {'Authorization': myToken});
     if (res.statusCode >= 200 || res.statusCode < 400) {
-      print(res.body);
+      print(res.body.isNotEmpty);
       return jsonDecode(res.body);
+    } else {
+      print(res.statusCode);
     }
   }
 }

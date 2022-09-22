@@ -2,9 +2,12 @@
 
 import 'package:flutter/material.dart';
 import 'package:quizu/Components/bottom_navbar.dart';
+import 'package:quizu/Components/networking.dart';
 import 'package:quizu/Components/new_button.dart';
 import 'package:quizu/constants.dart';
 import 'package:quizu/screens/quiz_page.dart';
+
+NetworkingHelper helper = NetworkingHelper();
 
 class QuizMe extends StatefulWidget {
   const QuizMe({super.key});

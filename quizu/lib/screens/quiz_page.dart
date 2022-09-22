@@ -1,4 +1,4 @@
-// ignore_for_file: prefer_const_constructors
+// ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
 
 import 'dart:async';
 import 'dart:ui';
@@ -92,7 +92,6 @@ class _QuizPageState extends State<QuizPage> {
                     ),
                   ),
                   onPress: () {
-                    // Check if Strings are equal then go to next question and put the timer on the run
                     setState(() {
                       checkAnswer('a')
                           ? quiz.nextQuestion()
@@ -101,7 +100,6 @@ class _QuizPageState extends State<QuizPage> {
                               MaterialPageRoute(
                                   builder: (context) => WrongPage()));
                     });
-                    // If not then show wrong page on top of this one
                   },
                 ),
                 SizedBox(
@@ -176,9 +174,11 @@ class _QuizPageState extends State<QuizPage> {
                           ),
                           Text(
                             '(1 remaining)',
-                            style: TextStyle(fontFeatures: [
-                              FontFeature.subscripts(),
-                            ]),
+                            style: TextStyle(
+                              fontFeatures: [
+                                FontFeature.subscripts(),
+                              ],
+                            ),
                           ),
                         ],
                       ),
@@ -194,7 +194,7 @@ class _QuizPageState extends State<QuizPage> {
             ),
           ),
         ),
-        bottomNavigationBar: BottomNavBar(),
+        // bottomNavigationBar: BottomNavBar(),
       ),
     );
   }

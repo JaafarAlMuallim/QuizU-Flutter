@@ -14,48 +14,50 @@ class WrongPage extends StatefulWidget {
 class _WrongPageState extends State<WrongPage> {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        // crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: [
-          Container(
-            margin: EdgeInsets.all(30),
-            child: Image(
-              image: AssetImage(
+    return SafeArea(
+      child: Scaffold(
+        body: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          // crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            Container(
+              margin: EdgeInsets.all(30),
+              child: Image.asset(
                 'images/cryingEmoji.png',
+                width: 175,
+                height: 170,
               ),
             ),
-          ),
-          Container(
-            margin: EdgeInsets.all(30),
-            child: Padding(
-              padding: EdgeInsets.all(10),
-              child: Text(
-                'Wrong Answer',
-                textAlign: TextAlign.center,
-                style: TextStyle(
-                  fontSize: 40,
-                ),
-              ),
-            ),
-          ),
-          Padding(
-            padding: EdgeInsets.all(65),
-            child: CustomButton(
-              containerContent: Center(
+            Container(
+              margin: EdgeInsets.all(30),
+              child: Padding(
+                padding: EdgeInsets.all(10),
                 child: Text(
-                  'Try Again',
+                  'Wrong Answer',
                   textAlign: TextAlign.center,
-                  style: kTextButtonStyle,
+                  style: TextStyle(
+                    fontSize: 40,
+                  ),
                 ),
               ),
-              onPress: () {
-                Navigator.pop(context);
-              },
             ),
-          )
-        ],
+            Padding(
+              padding: EdgeInsets.all(65),
+              child: CustomButton(
+                containerContent: Center(
+                  child: Text(
+                    'Try Again',
+                    textAlign: TextAlign.center,
+                    style: kTextButtonStyle,
+                  ),
+                ),
+                onPress: () {
+                  Navigator.pop(context);
+                },
+              ),
+            )
+          ],
+        ),
       ),
     );
   }

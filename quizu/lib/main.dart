@@ -2,11 +2,13 @@
 
 import 'dart:async';
 import 'package:flutter/material.dart';
+import 'package:quizu/Components/networking.dart';
 import 'package:quizu/constants.dart';
 import 'package:quizu/screens/leaderboard.dart';
 import 'package:quizu/screens/mobile_entry.dart';
 import 'package:quizu/screens/profile.dart';
 import 'package:quizu/screens/quiz_me.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 void main() {
   runApp(const MyApp());
@@ -25,7 +27,7 @@ class MyApp extends StatelessWidget {
         appBarTheme: const AppBarTheme(backgroundColor: kAppBarColor),
         canvasColor: kAppBarColor,
       ),
-      home: QuizMe(),
+      home: MobileEntry(),
     );
   }
 }
