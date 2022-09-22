@@ -9,6 +9,7 @@ import 'package:quizu/Components/networking.dart';
 import 'package:quizu/Components/new_button.dart';
 import 'package:quizu/Components/question.dart';
 import 'package:quizu/Components/quiz.dart';
+import 'package:quizu/Components/spin_kit.dart';
 import 'package:quizu/constants.dart';
 import 'package:quizu/screens/wrong.dart';
 
@@ -44,6 +45,7 @@ class _QuizPageState extends State<QuizPage> {
     _isLoading = true;
     NetworkingHelper helper = NetworkingHelper();
     dynamic data = await helper.getQuestions();
+    quiz.createQuiz(data);
     setState(() {
       _isLoading = false;
     });
@@ -77,138 +79,140 @@ class _QuizPageState extends State<QuizPage> {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-        body: Center(
-          child: Center(
-            child: Column(
-              children: [
-                SizedBox(
-                  height: 50,
-                ),
-                Text(
-                  intToTimeLeft(seconds),
-                  style: kNumberStyle,
-                ),
-                SizedBox(
-                  height: 20,
-                ),
-                Text(
-                  quiz.getText(),
-                  style: kQuestion,
-                  textAlign: TextAlign.center,
-                ),
-                SizedBox(
-                  height: 45,
-                ),
-                CustomButton(
-                  containerContent: Center(
-                    child: Text(
-                      quiz.getAnswerText('a'),
-                      style: kTextButtonStyle,
-                    ),
-                  ),
-                  onPress: () {
-                    setState(() {
-                      checkAnswer('a')
-                          ? quiz.nextQuestion()
-                          : Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => WrongPage()));
-                    });
-                  },
-                ),
-                SizedBox(
-                  height: 10,
-                ),
-                CustomButton(
-                  containerContent: Center(
-                    child: Text(
-                      quiz.getAnswerText('b'),
-                      style: kTextButtonStyle,
-                    ),
-                  ),
-                  onPress: () {
-                    checkAnswer('b')
-                        ? quiz.nextQuestion()
-                        : Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => WrongPage()));
-                  },
-                ),
-                SizedBox(
-                  height: 10,
-                ),
-                CustomButton(
-                  containerContent: Center(
-                    child: Text(
-                      quiz.getAnswerText('c'),
-                      style: kTextButtonStyle,
-                    ),
-                  ),
-                  onPress: () {
-                    checkAnswer('c')
-                        ? quiz.nextQuestion()
-                        : Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => WrongPage()));
-                  },
-                ),
-                SizedBox(
-                  height: 10,
-                ),
-                CustomButton(
-                  containerContent: Center(
-                    child: Text(
-                      quiz.getAnswerText('d'),
-                      style: kTextButtonStyle,
-                    ),
-                  ),
-                  onPress: () {
-                    checkAnswer('d')
-                        ? quiz.nextQuestion()
-                        : Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => WrongPage()));
-                  },
-                ),
-                SizedBox(
-                  height: 10,
-                ),
-                Visibility(
-                  visible: skips == 1,
-                  child: CustomButton(
-                      containerContent: Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Text(
-                            'Skip 🔥',
+        body: _isLoading
+            ? loading()
+            : Center(
+                child: Center(
+                  child: Column(
+                    children: [
+                      SizedBox(
+                        height: 50,
+                      ),
+                      Text(
+                        intToTimeLeft(seconds),
+                        style: kNumberStyle,
+                      ),
+                      SizedBox(
+                        height: 20,
+                      ),
+                      Text(
+                        quiz.getText(),
+                        style: kQuestion,
+                        textAlign: TextAlign.center,
+                      ),
+                      SizedBox(
+                        height: 45,
+                      ),
+                      CustomButton(
+                        containerContent: Center(
+                          child: Text(
+                            quiz.getAnswerText('a'),
                             style: kTextButtonStyle,
                           ),
-                          Text(
-                            '(1 remaining)',
-                            style: TextStyle(
-                              fontFeatures: [
-                                FontFeature.subscripts(),
+                        ),
+                        onPress: () {
+                          setState(() {
+                            checkAnswer('a')
+                                ? quiz.nextQuestion()
+                                : Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) => WrongPage()));
+                          });
+                        },
+                      ),
+                      SizedBox(
+                        height: 10,
+                      ),
+                      CustomButton(
+                        containerContent: Center(
+                          child: Text(
+                            quiz.getAnswerText('b'),
+                            style: kTextButtonStyle,
+                          ),
+                        ),
+                        onPress: () {
+                          checkAnswer('b')
+                              ? quiz.nextQuestion()
+                              : Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => WrongPage()));
+                        },
+                      ),
+                      SizedBox(
+                        height: 10,
+                      ),
+                      CustomButton(
+                        containerContent: Center(
+                          child: Text(
+                            quiz.getAnswerText('c'),
+                            style: kTextButtonStyle,
+                          ),
+                        ),
+                        onPress: () {
+                          checkAnswer('c')
+                              ? quiz.nextQuestion()
+                              : Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => WrongPage()));
+                        },
+                      ),
+                      SizedBox(
+                        height: 10,
+                      ),
+                      CustomButton(
+                        containerContent: Center(
+                          child: Text(
+                            quiz.getAnswerText('d'),
+                            style: kTextButtonStyle,
+                          ),
+                        ),
+                        onPress: () {
+                          checkAnswer('d')
+                              ? quiz.nextQuestion()
+                              : Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => WrongPage()));
+                        },
+                      ),
+                      SizedBox(
+                        height: 10,
+                      ),
+                      Visibility(
+                        visible: skips == 1,
+                        child: CustomButton(
+                            containerContent: Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Text(
+                                  'Skip 🔥',
+                                  style: kTextButtonStyle,
+                                ),
+                                Text(
+                                  '(1 remaining)',
+                                  style: TextStyle(
+                                    fontFeatures: [
+                                      FontFeature.subscripts(),
+                                    ],
+                                  ),
+                                ),
                               ],
                             ),
-                          ),
-                        ],
-                      ),
-                      onPress: () {
-                        setState(() {
-                          skips--;
-                          quiz.nextQuestion();
-                        });
-                      },
-                      color: Color(0xFF33277B)),
-                )
-              ],
-            ),
-          ),
-        ),
+                            onPress: () {
+                              setState(() {
+                                skips--;
+                                quiz.nextQuestion();
+                              });
+                            },
+                            color: Color(0xFF33277B)),
+                      )
+                    ],
+                  ),
+                ),
+              ),
         // bottomNavigationBar: BottomNavBar(),
       ),
     );

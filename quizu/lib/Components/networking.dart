@@ -66,7 +66,7 @@ class NetworkingHelper {
     }
   }
 
-  Future<dynamic> getQuestions() async {
+  dynamic getQuestions() async {
     int index = 0;
     List<Question> questions = [];
     http.Response res = await http
@@ -79,9 +79,7 @@ class NetworkingHelper {
         questions.add(question);
         index++;
       }
-      print('First Element');
-      print(dataParsed[0]);
-      // List<Question> questions = http.fromJson(data);
+      return questions;
     } else {
       print(res.statusCode);
     }
