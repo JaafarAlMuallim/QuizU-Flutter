@@ -18,21 +18,21 @@ class _ShowProfileState extends State<ShowProfile> {
   String mobile = '';
   bool _isLoading = false;
 
-  void getInfo() async {
-    _isLoading = true;
-    NetworkingHelper helper = NetworkingHelper();
-    dynamic data = await helper.getUserInfo();
-    name = data['name'];
-    mobile = data['mobile'];
-    setState(() {
-      _isLoading = false;
-    });
-  }
+  // void getInfo() async {
+  //   _isLoading = true;
+  //   NetworkingHelper helper = NetworkingHelper();
+  //   dynamic data = await helper.getUserInfo();
+  //   name = data['name'];
+  //   mobile = data['mobile'];
+  //   setState(() {
+  //     _isLoading = false;
+  //   });
+  // }
 
   @override
   void initState() {
     super.initState();
-    getInfo();
+    // getInfo();
   }
 
   @override

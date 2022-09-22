@@ -14,7 +14,8 @@ class LeaderBoard extends StatefulWidget {
 }
 
 class _LeaderBoardState extends State<LeaderBoard> {
-  String tops = '';
+  List<String> tops = [];
+  List<int> scores = [];
   bool _isLoading = false;
 
   void getTop() async {
@@ -22,11 +23,41 @@ class _LeaderBoardState extends State<LeaderBoard> {
     NetworkingHelper helper = NetworkingHelper();
     dynamic data = await helper.getTopTen();
     for (int i = 0; i < 10; i++) {
-      tops += '${data[i]['name']}             ${data[i]['score']}\n';
+      if (data[i]['name'] != null && data[i]['score'] != null) {
+        tops.add(data[i]['name']);
+        scores.add(data[i]['score']);
+      }
     }
     setState(() {
       _isLoading = false;
     });
+  }
+
+  Widget namesColumn() {
+    List<Widget> names = [];
+    for (String top in tops) {
+      names.add(Center(
+        child: Text(
+          top,
+          style: kSubtitleStyle,
+        ),
+      ));
+    }
+    return Column(mainAxisAlignment: MainAxisAlignment.center, children: names);
+  }
+
+  Widget scoresColumn() {
+    List<Widget> topScores = [];
+    for (int score in scores) {
+      topScores.add(Center(
+        child: Text(
+          '$score',
+          style: kSubtitleStyle,
+        ),
+      ));
+    }
+    return Column(
+        mainAxisAlignment: MainAxisAlignment.center, children: topScores);
   }
 
   @override
@@ -53,13 +84,15 @@ class _LeaderBoardState extends State<LeaderBoard> {
                   physics: const BouncingScrollPhysics(),
                   child: Column(
                     children: [
-                      Text(
-                        'Leaderboard',
-                        style: kTitleStyle,
+                      Center(
+                        child: Text(
+                          'Leaderboard',
+                          style: kTitleStyle,
+                        ),
                       ),
-                      Text(
-                        tops,
-                        style: kSubtitleStyle,
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceAround,
+                        children: [namesColumn(), scoresColumn()],
                       ),
                     ],
                   ),

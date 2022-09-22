@@ -3,12 +3,14 @@
 import 'dart:convert';
 
 import 'package:http/http.dart' as http;
+import 'package:quizu/Components/question.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 const String loginUrl = 'https://quizu.okoul.com/Login';
 const String nameUrl = 'https://quizu.okoul.com/Name';
 const String boardUrl = 'https://quizu.okoul.com/TopScores';
 const String infoUrl = 'https://quizu.okoul.com/UserInfo';
+const String questionsUrl = 'https://quizu.okoul.com/Questions';
 // const token =
 // 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MjYyLCJpYXQiOjE2NjM2OTk0Mzh9.5qDAy5Zpj1XZfnh9amp0bLisIabChQhx8u13ZAr9hk4';
 
@@ -54,13 +56,32 @@ class NetworkingHelper {
   }
 
   Future<dynamic> getUserInfo() async {
-    print(myToken);
-    print(infoUrl);
     http.Response res =
         await http.get(Uri.parse(infoUrl), headers: {'Authorization': myToken});
     if (res.statusCode >= 200 || res.statusCode < 400) {
       print(res.body.isNotEmpty);
       return jsonDecode(res.body);
+    } else {
+      print(res.statusCode);
+    }
+  }
+
+  Future<dynamic> getQuestions() async {
+    int index = 0;
+    List<Question> questions = [];
+    http.Response res = await http
+        .get(Uri.parse(questionsUrl), headers: {'Authorization': myToken});
+    if (res.statusCode >= 200 || res.statusCode < 400) {
+      print(res.body);
+      dynamic dataParsed = await jsonDecode(res.body);
+      for (dynamic item in dataParsed) {
+        Question question = Question.fromJson(dataParsed[index]);
+        questions.add(question);
+        index++;
+      }
+      print('First Element');
+      print(dataParsed[0]);
+      // List<Question> questions = http.fromJson(data);
     } else {
       print(res.statusCode);
     }

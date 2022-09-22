@@ -5,7 +5,9 @@ import 'dart:ui';
 
 import 'package:flutter/material.dart';
 import 'package:quizu/Components/bottom_navbar.dart';
+import 'package:quizu/Components/networking.dart';
 import 'package:quizu/Components/new_button.dart';
+import 'package:quizu/Components/question.dart';
 import 'package:quizu/Components/quiz.dart';
 import 'package:quizu/constants.dart';
 import 'package:quizu/screens/wrong.dart';
@@ -25,6 +27,8 @@ class _QuizPageState extends State<QuizPage> {
   int skips = 1;
   late Timer _timer;
   int counter = 0;
+  bool _isLoading = false;
+
   String intToTimeLeft(int seconds) {
     int min = seconds ~/ 60;
 
@@ -34,6 +38,15 @@ class _QuizPageState extends State<QuizPage> {
     }
 
     return '${min > 0 ? "0$min:" : ''}${second < 10 ? '0$second' : second}';
+  }
+
+  void getInfo() async {
+    _isLoading = true;
+    NetworkingHelper helper = NetworkingHelper();
+    dynamic data = await helper.getQuestions();
+    setState(() {
+      _isLoading = false;
+    });
   }
 
   bool checkAnswer(String pickedAnswer) {
@@ -47,6 +60,8 @@ class _QuizPageState extends State<QuizPage> {
   @override
   void initState() {
     super.initState();
+    getInfo();
+
     _timer = Timer.periodic(const Duration(seconds: 1), (timer) {
       setState(() {
         if (seconds > 0) {
