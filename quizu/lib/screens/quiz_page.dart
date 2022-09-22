@@ -47,12 +47,8 @@ class _QuizPageState extends State<QuizPage> {
 
   void getInfo() async {
     _isLoading = true;
-
     dynamic data = await helper.getQuestions();
     quiz.createQuiz(data);
-    setState(() {
-      _isLoading = false;
-    });
   }
 
   bool checkAnswer(String pickedAnswer) {
@@ -93,7 +89,11 @@ class _QuizPageState extends State<QuizPage> {
   @override
   void initState() {
     super.initState();
+
     getInfo();
+    setState(() {
+      _isLoading = false;
+    });
     _timer = Timer.periodic(const Duration(seconds: 1), (timer) {
       changeData();
       setState(() {
@@ -159,11 +159,13 @@ class _QuizPageState extends State<QuizPage> {
                                 ),
                               ),
                               onPress: () {
-                                setState(() {
-                                  checkAnswer('a')
-                                      ? quiz.nextQuestion()
-                                      : callWrong();
-                                });
+                                setState(
+                                  () {
+                                    checkAnswer('a')
+                                        ? quiz.nextQuestion()
+                                        : callWrong();
+                                  },
+                                );
                               },
                             ),
                             SizedBox(

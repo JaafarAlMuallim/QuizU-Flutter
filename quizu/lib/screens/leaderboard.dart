@@ -90,6 +90,9 @@ class _LeaderBoardState extends State<LeaderBoard> {
                           style: kTitleStyle,
                         ),
                       ),
+                      SizedBox(
+                        height: 40,
+                      ),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceAround,
                         children: [namesColumn(), scoresColumn()],

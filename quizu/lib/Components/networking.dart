@@ -12,19 +12,17 @@ const String boardUrl = 'https://quizu.okoul.com/TopScores';
 const String infoUrl = 'https://quizu.okoul.com/UserInfo';
 const String questionsUrl = 'https://quizu.okoul.com/Questions';
 const String sendScoreUrl = 'https://quizu.okoul.com/Score';
-// const token =
-// 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MjYyLCJpYXQiOjE2NjM2OTk0Mzh9.5qDAy5Zpj1XZfnh9amp0bLisIabChQhx8u13ZAr9hk4';
-
-// fetchToken() async {
-//   dynamic tokenFuture = await SharedPrefUtils.readPrefStr('token');
-//   return tokenFuture;
-// }
 
 class NetworkingHelper {
   static dynamic myToken;
 
-  Future<dynamic> login(String otp, String mobile) async {
+  Future<bool> start() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
+    myToken = prefs.getString('token');
+    return myToken == null;
+  }
+
+  Future<dynamic> login(String otp, String mobile) async {
     http.Response res = await http
         .post(Uri.parse(loginUrl), body: {'OTP': '0000', 'mobile': '09'});
     if (res.statusCode >= 200 || res.statusCode < 400) {
@@ -32,8 +30,6 @@ class NetworkingHelper {
       dynamic data = await jsonDecode(res.body);
       String token = data['token'];
       print(token);
-      await prefs.setString('token', token);
-      myToken = prefs.getString('token');
       return jsonDecode(res.body);
     }
   }
