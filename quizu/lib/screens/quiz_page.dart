@@ -8,6 +8,7 @@ import 'package:quizu/Components/bottom_navbar.dart';
 import 'package:quizu/Components/new_button.dart';
 import 'package:quizu/Components/quiz.dart';
 import 'package:quizu/constants.dart';
+import 'package:quizu/screens/wrong.dart';
 
 Quiz quiz = Quiz();
 
@@ -23,7 +24,7 @@ class _QuizPageState extends State<QuizPage> {
   String result = '';
   int skips = 1;
   late Timer _timer;
-
+  int counter = 0;
   String intToTimeLeft(int seconds) {
     int min = seconds ~/ 60;
 
@@ -33,6 +34,14 @@ class _QuizPageState extends State<QuizPage> {
     }
 
     return '${min > 0 ? "0$min:" : ''}${second < 10 ? '0$second' : second}';
+  }
+
+  bool checkAnswer(String pickedAnswer) {
+    if (pickedAnswer == quiz.getFinalAnswer()) {
+      counter++;
+      return true;
+    }
+    return false;
   }
 
   @override
@@ -70,6 +79,7 @@ class _QuizPageState extends State<QuizPage> {
                 Text(
                   quiz.getText(),
                   style: kQuestion,
+                  textAlign: TextAlign.center,
                 ),
                 SizedBox(
                   height: 45,
@@ -77,12 +87,20 @@ class _QuizPageState extends State<QuizPage> {
                 CustomButton(
                   containerContent: Center(
                     child: Text(
-                      quiz.getAnswer('a'),
+                      quiz.getAnswerText('a'),
                       style: kTextButtonStyle,
                     ),
                   ),
                   onPress: () {
                     // Check if Strings are equal then go to next question and put the timer on the run
+                    setState(() {
+                      checkAnswer('a')
+                          ? quiz.nextQuestion()
+                          : Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => WrongPage()));
+                    });
                     // If not then show wrong page on top of this one
                   },
                 ),
@@ -92,11 +110,18 @@ class _QuizPageState extends State<QuizPage> {
                 CustomButton(
                   containerContent: Center(
                     child: Text(
-                      quiz.getAnswer('b'),
+                      quiz.getAnswerText('b'),
                       style: kTextButtonStyle,
                     ),
                   ),
-                  onPress: () {},
+                  onPress: () {
+                    checkAnswer('b')
+                        ? quiz.nextQuestion()
+                        : Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => WrongPage()));
+                  },
                 ),
                 SizedBox(
                   height: 10,
@@ -104,11 +129,18 @@ class _QuizPageState extends State<QuizPage> {
                 CustomButton(
                   containerContent: Center(
                     child: Text(
-                      quiz.getAnswer('c'),
+                      quiz.getAnswerText('c'),
                       style: kTextButtonStyle,
                     ),
                   ),
-                  onPress: () {},
+                  onPress: () {
+                    checkAnswer('c')
+                        ? quiz.nextQuestion()
+                        : Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => WrongPage()));
+                  },
                 ),
                 SizedBox(
                   height: 10,
@@ -116,11 +148,18 @@ class _QuizPageState extends State<QuizPage> {
                 CustomButton(
                   containerContent: Center(
                     child: Text(
-                      quiz.getAnswer('d'),
+                      quiz.getAnswerText('d'),
                       style: kTextButtonStyle,
                     ),
                   ),
-                  onPress: () {},
+                  onPress: () {
+                    checkAnswer('d')
+                        ? quiz.nextQuestion()
+                        : Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => WrongPage()));
+                  },
                 ),
                 SizedBox(
                   height: 10,
@@ -146,6 +185,7 @@ class _QuizPageState extends State<QuizPage> {
                       onPress: () {
                         setState(() {
                           skips--;
+                          quiz.nextQuestion();
                         });
                       },
                       color: Color(0xFF33277B)),
@@ -159,8 +199,3 @@ class _QuizPageState extends State<QuizPage> {
     );
   }
 }
-
-/*Updated API calls and Loading Page*/ 
-/*Added the API Call on initialization of screen instead of loading two different pages.
-Added Questions Page and Updated its UI. 
-Added Skip Button*/

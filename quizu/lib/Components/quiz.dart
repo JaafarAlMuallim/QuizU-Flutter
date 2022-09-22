@@ -6,6 +6,12 @@ class Quiz {
   final List<Question> _questions = [
     Question('Who Created Ruby on Rails?', 'Paul Graham', 'DHH', 'Bill Gates',
         'Tom Watson', 'b'),
+    Question('What is Albania\'s capital?', 'Shvana', 'Dublin', 'Sokdre',
+        'Tirana', 'd'),
+    Question('What company created Kotlin?', 'Github', 'JetBrains', 'Google',
+        'Facebook', 'b'),
+    Question('Who founded HungerStation?', 'Ahmad Al-Ghamdi',
+        'Ghassab Al-Mandil', 'Ibrahim Al-Jassem', 'Ahmad Al-Zaini', 'c'),
   ];
 
   void nextQuestion() {
@@ -18,7 +24,7 @@ class Quiz {
     return _questions[_current].text;
   }
 
-  String getAnswer(String answers) {
+  String getAnswerText(String answers) {
     if (answers == 'a') {
       return _questions[_current].a;
     }
@@ -30,6 +36,10 @@ class Quiz {
     } else {
       return _questions[_current].d;
     }
+  }
+
+  String getFinalAnswer() {
+    return _questions[_current].correctAnswer;
   }
 
   bool isFinshed() {
