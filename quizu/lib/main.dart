@@ -3,7 +3,6 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:quizu/constants.dart';
-import 'package:quizu/screens/finsihed_screen.dart';
 import 'package:quizu/screens/mobile_entry.dart';
 
 void main() {
@@ -23,9 +22,7 @@ class MyApp extends StatelessWidget {
         appBarTheme: const AppBarTheme(backgroundColor: kAppBarColor),
         canvasColor: kAppBarColor,
       ),
-      home: FinishedScreen(
-        score: 20,
-      ),
+      home: MobileEntry(),
     );
   }
 }

@@ -31,7 +31,6 @@ class MobileEntryState extends State<MobileEntry> {
   void getData() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     token = prefs.getString('token');
-    print(token);
   }
 
   @override
@@ -98,7 +97,6 @@ class MobileEntryState extends State<MobileEntry> {
                           maxLength: 9,
                           onChanged: (value) {
                             mobileNum = value;
-                            print(mobileNum);
                           },
                         ),
                       ),
@@ -113,7 +111,6 @@ class MobileEntryState extends State<MobileEntry> {
                           onPress: () async {
                             isValid = await PhoneNumberUtil()
                                 .validate(mobileNum, regionCode: region.code);
-                            print(isValid);
                             if (isValid) {
                               Navigator.pushReplacement(
                                 context,

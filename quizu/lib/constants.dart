@@ -44,7 +44,7 @@ const kChallenge = TextStyle(
 );
 
 const kNumberStyle = TextStyle(
-  fontSize: 60.0,
+  fontSize: 50.0,
   fontWeight: FontWeight.w900,
   fontFamily: 'TitilliumWeb',
 );

@@ -11,6 +11,7 @@ const String nameUrl = 'https://quizu.okoul.com/Name';
 const String boardUrl = 'https://quizu.okoul.com/TopScores';
 const String infoUrl = 'https://quizu.okoul.com/UserInfo';
 const String questionsUrl = 'https://quizu.okoul.com/Questions';
+const String sendScoreUrl = 'https://quizu.okoul.com/Score';
 // const token =
 // 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MjYyLCJpYXQiOjE2NjM2OTk0Mzh9.5qDAy5Zpj1XZfnh9amp0bLisIabChQhx8u13ZAr9hk4';
 
@@ -67,7 +68,6 @@ class NetworkingHelper {
   }
 
   dynamic getQuestions() async {
-    int index = 0;
     List<Question> questions = [];
     http.Response res = await http
         .get(Uri.parse(questionsUrl), headers: {'Authorization': myToken});
@@ -75,11 +75,20 @@ class NetworkingHelper {
       print(res.body);
       dynamic dataParsed = await jsonDecode(res.body);
       for (dynamic item in dataParsed) {
-        Question question = Question.fromJson(dataParsed[index]);
+        Question question = Question.fromJson(item);
         questions.add(question);
-        index++;
       }
       return questions;
+    } else {
+      print(res.statusCode);
+    }
+  }
+
+  void sendScore(int score) async {
+    http.Response res = await http.post(Uri.parse(sendScoreUrl),
+        body: {'score': score.toString()}, headers: {'Authorization': myToken});
+    if (res.statusCode >= 200 || res.statusCode < 400) {
+      print(res.body);
     } else {
       print(res.statusCode);
     }

@@ -3,13 +3,11 @@
 import 'package:flutter/material.dart';
 import 'package:quizu/Components/networking.dart';
 import 'package:quizu/Components/new_button.dart';
-import 'package:quizu/Components/quiz.dart';
 import 'package:quizu/Components/shared.dart';
 import 'package:quizu/Components/spin_kit.dart';
 import 'package:quizu/constants.dart';
 import 'package:quizu/screens/error.dart';
 import 'package:quizu/screens/quiz_me.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 NetworkingHelper helper = NetworkingHelper();
 

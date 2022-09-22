@@ -2,7 +2,6 @@
 
 import 'package:flutter/material.dart';
 import 'package:quizu/Components/bottom_navbar.dart';
-import 'package:quizu/Components/networking.dart';
 import 'package:quizu/Components/spin_kit.dart';
 import 'package:quizu/constants.dart';
 
@@ -16,7 +15,7 @@ class ShowProfile extends StatefulWidget {
 class _ShowProfileState extends State<ShowProfile> {
   String? name;
   String mobile = '';
-  bool _isLoading = false;
+  final bool _isLoading = false;
 
   // void getInfo() async {
   //   _isLoading = true;
