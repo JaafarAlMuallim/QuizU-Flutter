@@ -3,9 +3,13 @@ import 'package:quizu/constants.dart';
 
 class CustomButton extends StatelessWidget {
   const CustomButton(
-      {super.key, required this.containerContent, required this.onPress});
+      {super.key,
+      required this.containerContent,
+      required this.onPress,
+      this.color = kButtonColor});
   final Widget? containerContent;
   final VoidCallback? onPress;
+  final Color color;
 
   @override
   Widget build(BuildContext context) {
@@ -17,7 +21,7 @@ class CustomButton extends StatelessWidget {
         margin: const EdgeInsets.all(10),
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(25),
-          color: kButtonColor,
+          color: color,
         ),
         child: containerContent,
       ),

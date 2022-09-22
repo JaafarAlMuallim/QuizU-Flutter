@@ -3,6 +3,7 @@
 import 'package:flutter/material.dart';
 import 'package:quizu/constants.dart';
 import 'package:quizu/screens/leaderboard.dart';
+import 'package:quizu/screens/profile.dart';
 import 'package:quizu/screens/quiz_me.dart';
 
 class BottomNavBar extends StatefulWidget {
@@ -53,10 +54,11 @@ class _BottomNavBarState extends State<BottomNavBar> {
                       if (_selectedIndex != 1) {
                         _selectedIndex = 1;
                         Navigator.pushReplacement(
-                            context,
-                            MaterialPageRoute(
-                                builder: ((context) =>
-                                    LeaderBoard(data: 'XX'))));
+                          context,
+                          MaterialPageRoute(
+                            builder: ((context) => LeaderBoard()),
+                          ),
+                        );
                       }
                     },
                   );
@@ -68,7 +70,15 @@ class _BottomNavBarState extends State<BottomNavBar> {
                 onPressed: () {
                   setState(
                     () {
-                      _selectedIndex = 2;
+                      if (_selectedIndex != 2) {
+                        _selectedIndex = 2;
+                        Navigator.pushReplacement(
+                          context,
+                          MaterialPageRoute(
+                            builder: ((context) => ShowProfile()),
+                          ),
+                        );
+                      }
                     },
                   );
                 },

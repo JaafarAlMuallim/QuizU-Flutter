@@ -1,4 +1,4 @@
-// ignore_for_file: prefer_const_constructors, unused_field
+// ignore_for_file: prefer_const_constructors
 
 import 'package:flutter/material.dart';
 import 'package:quizu/Components/bottom_navbar.dart';
@@ -6,24 +6,24 @@ import 'package:quizu/Components/networking.dart';
 import 'package:quizu/Components/spin_kit.dart';
 import 'package:quizu/constants.dart';
 
-class LeaderBoard extends StatefulWidget {
-  const LeaderBoard({super.key});
+class ShowProfile extends StatefulWidget {
+  const ShowProfile({super.key});
 
   @override
-  State<LeaderBoard> createState() => _LeaderBoardState();
+  State<ShowProfile> createState() => _ShowProfileState();
 }
 
-class _LeaderBoardState extends State<LeaderBoard> {
-  String tops = '';
+class _ShowProfileState extends State<ShowProfile> {
+  String name = '';
+  String mobile = '';
   bool _isLoading = false;
 
-  void getTop() async {
+  void getInfo() async {
     _isLoading = true;
     NetworkingHelper helper = NetworkingHelper(mobileNum: '09', otp: '0000');
-    dynamic data = await helper.getTopTen();
-    for (int i = 0; i < 10; i++) {
-      tops += '${data[i]['name']}    ${data[i]['score']}\n';
-    }
+    dynamic data = await helper.getUserInfo();
+    name = data['name'];
+    mobile = data['mobile'];
     setState(() {
       _isLoading = false;
     });
@@ -32,7 +32,7 @@ class _LeaderBoardState extends State<LeaderBoard> {
   @override
   void initState() {
     super.initState();
-    getTop();
+    getInfo();
   }
 
   @override
@@ -52,9 +52,17 @@ class _LeaderBoardState extends State<LeaderBoard> {
                 child: SingleChildScrollView(
                   physics: const BouncingScrollPhysics(),
                   child: Center(
-                    child: Text(
-                      tops,
-                      style: kBodyStyle,
+                    child: Column(
+                      children: [
+                        Text(
+                          'Name: $name',
+                          style: kTextStyle,
+                        ),
+                        Text(
+                          'Mobile: $mobile',
+                          style: kTextStyle,
+                        ),
+                      ],
                     ),
                   ),
                 ),

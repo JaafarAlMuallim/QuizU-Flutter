@@ -50,8 +50,9 @@ const kNumberStyle = TextStyle(
 );
 
 const kQuestion = TextStyle(
-  fontSize: 22.0,
-  color: Color(0xFF8D8E98),
+  fontSize: 32.0,
+  color: Colors.white,
+  fontFamily: 'TitilliumWeb',
 );
 
 const kTitleStyle = TextStyle(

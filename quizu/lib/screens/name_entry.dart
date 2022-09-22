@@ -5,7 +5,7 @@ import 'package:quizu/Components/new_button.dart';
 import 'package:quizu/Components/shared.dart';
 import 'package:quizu/constants.dart';
 import 'package:quizu/screens/error.dart';
-import 'package:quizu/screens/loading_screen.dart';
+import 'package:quizu/screens/quiz_me.dart';
 
 class NameEntry extends StatefulWidget {
   const NameEntry({super.key, required this.mobileNum, required this.otp});
@@ -57,13 +57,7 @@ class _NameEntryState extends State<NameEntry> {
                     if (name.isNotEmpty) {
                       Navigator.pushReplacement(
                         context,
-                        MaterialPageRoute(
-                          builder: (context) => LoadingScreen(
-                              mobileNum: widget.mobileNum,
-                              otp: widget.otp,
-                              name: name,
-                              data: 'getData'),
-                        ),
+                        MaterialPageRoute(builder: (context) => QuizMe()),
                       );
                     } else {
                       Navigator.push(
