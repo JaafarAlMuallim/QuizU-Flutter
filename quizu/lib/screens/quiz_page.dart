@@ -139,11 +139,8 @@ class _QuizPageState extends State<QuizPage> {
                               ),
                             ),
                             SizedBox(
-                              height: 30,
-                            ),
-                            Container(
-                              width: 300,
-                              height: 100,
+                              width: 400,
+                              height: 120,
                               child: Center(
                                 child: AnimatedSwitcher(
                                   duration: const Duration(milliseconds: 600),

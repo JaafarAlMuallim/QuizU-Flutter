@@ -28,9 +28,11 @@ class _LeaderBoardState extends State<LeaderBoard> {
         scores.add(data[i]['score']);
       }
     }
-    setState(() {
-      _isLoading = false;
-    });
+    if (mounted) {
+      setState(() {
+        _isLoading = false;
+      });
+    }
   }
 
   Widget namesColumn() {
