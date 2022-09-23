@@ -73,6 +73,7 @@ class _LeaderBoardState extends State<LeaderBoard> {
     return SafeArea(
       child: Scaffold(
         appBar: AppBar(
+          shape: Border(bottom: BorderSide(color: kBottomAppBar)),
           title: Text(
             kHourglass,
             style: kAppBarStyle,

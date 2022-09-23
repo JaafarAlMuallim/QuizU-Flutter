@@ -46,12 +46,6 @@ class _QuizPageState extends State<QuizPage> {
     return '${min > 0 ? "0$min:" : ''}${second < 10 ? '0$second' : second}';
   }
 
-  void getInfo() async {
-    _isLoading = true;
-    dynamic data = await helper.getQuestions();
-    quiz.createQuiz(data);
-  }
-
   bool checkAnswer(String pickedAnswer) {
     if (pickedAnswer == quiz.getFinalAnswer()) {
       counter++;
@@ -61,7 +55,7 @@ class _QuizPageState extends State<QuizPage> {
   }
 
   Future callWrong() {
-    return Navigator.push(
+    return Navigator.pushReplacement(
         context, MaterialPageRoute(builder: (context) => WrongPage()));
   }
 
@@ -88,27 +82,39 @@ class _QuizPageState extends State<QuizPage> {
     }
   }
 
+  void startTimer() {
+    _timer = Timer.periodic(const Duration(seconds: 1), (timer) {
+      quiz.reset();
+      if (mounted) {
+        setState(() {
+          updateData();
+          if (seconds > 0) {
+            seconds--;
+          } else if (seconds <= 0 || quiz.isFinshed()) {
+            _timer.cancel();
+            sendScore();
+            Navigator.pushReplacement(
+                context,
+                MaterialPageRoute(
+                    builder: ((context) => FinishedScreen(score: counter))));
+          }
+          _isLoading = false;
+        });
+      }
+    });
+  }
+
   @override
   void initState() {
     super.initState();
     quiz.reset();
-    getInfo();
-    _timer = Timer.periodic(const Duration(seconds: 1), (timer) {
-      updateData();
-      setState(() {
-        if (seconds > 0) {
-          seconds--;
-        } else if (seconds <= 0 || quiz.isFinshed()) {
-          _timer.cancel();
-          sendScore();
-          Navigator.pushReplacement(
-              context,
-              MaterialPageRoute(
-                  builder: ((context) => FinishedScreen(score: counter))));
-        }
-        _isLoading = false;
-      });
-    });
+    getInfo().then((value) => startTimer());
+  }
+
+  Future<void> getInfo() async {
+    _isLoading = true;
+    dynamic data = await helper.getQuestions();
+    quiz.createQuiz(data);
   }
 
   @override

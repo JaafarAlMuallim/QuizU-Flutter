@@ -3,6 +3,8 @@
 import 'package:flutter/material.dart';
 import 'package:quizu/Components/new_button.dart';
 import 'package:quizu/constants.dart';
+import 'package:quizu/screens/quiz_me.dart';
+import 'package:quizu/screens/quiz_page.dart';
 
 class WrongPage extends StatefulWidget {
   const WrongPage({super.key});
@@ -16,34 +18,32 @@ class _WrongPageState extends State<WrongPage> {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-        body: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          // crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [
-            Container(
-              margin: EdgeInsets.all(30),
-              child: Image.asset(
-                'images/cryingEmoji.png',
-                width: 175,
-                height: 170,
+        body: Center(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Container(
+                margin: EdgeInsets.all(30),
+                child: Image.asset(
+                  'images/cryingEmoji.png',
+                  width: 175,
+                  height: 170,
+                ),
               ),
-            ),
-            Container(
-              margin: EdgeInsets.all(30),
-              child: Padding(
-                padding: EdgeInsets.all(10),
-                child: Text(
-                  'Wrong Answer',
-                  textAlign: TextAlign.center,
-                  style: TextStyle(
-                    fontSize: 40,
+              Container(
+                margin: EdgeInsets.all(30),
+                child: Padding(
+                  padding: EdgeInsets.all(10),
+                  child: Text(
+                    'Wrong Answer',
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                      fontSize: 40,
+                    ),
                   ),
                 ),
               ),
-            ),
-            Padding(
-              padding: EdgeInsets.all(65),
-              child: CustomButton(
+              CustomButton(
                 containerContent: Center(
                   child: Text(
                     'Try Again',
@@ -52,11 +52,28 @@ class _WrongPageState extends State<WrongPage> {
                   ),
                 ),
                 onPress: () {
-                  Navigator.pop(context);
+                  Navigator.pushReplacement(context,
+                      MaterialPageRoute(builder: (context) => QuizPage()));
                 },
               ),
-            )
-          ],
+              SizedBox(
+                height: 30,
+              ),
+              CustomButton(
+                containerContent: Center(
+                  child: Text(
+                    'Home Page',
+                    textAlign: TextAlign.center,
+                    style: kTextButtonStyle,
+                  ),
+                ),
+                onPress: () {
+                  Navigator.pushReplacement(context,
+                      MaterialPageRoute(builder: (context) => QuizMe()));
+                },
+              )
+            ],
+          ),
         ),
       ),
     );

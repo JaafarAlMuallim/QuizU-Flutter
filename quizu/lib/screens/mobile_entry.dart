@@ -71,28 +71,6 @@ class MobileEntryState extends State<MobileEntry> {
                                 onChanged: (value) {
                                   countryCode = value.toString();
                                 }),
-                            // prefixIcon: Padding(
-                            //   padding: EdgeInsets.all(10),
-                            //   child: Row(
-                            //     mainAxisSize: MainAxisSize.min,
-                            //     mainAxisAlignment: MainAxisAlignment.start,
-                            //     children: [
-                            //       Image.asset(
-                            //         'images/flag.png',
-                            //         width: 40,
-                            //         height: 40,
-                            //       ),
-                            //       SizedBox(
-                            //         width: 8,
-                            //       ),
-                            //       Image.asset(
-                            //         'images/buttonlist.png',
-                            //         width: 20,
-                            //         height: 20,
-                            //       ),
-                            //     ],
-                            //   ),
-                            // ),
                             contentPadding: EdgeInsets.symmetric(
                                 vertical: 10, horizontal: 10),
                             hintText: '53 000 0000',

@@ -19,51 +19,53 @@ class QuizMe extends StatefulWidget {
 class _QuizMeState extends State<QuizMe> {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        shape: Border(bottom: BorderSide(color: kBottomAppBar)),
-        title: Text(
-          kHourglass,
-          style: kAppBarStyle,
+    return SafeArea(
+      child: Scaffold(
+        appBar: AppBar(
+          shape: Border(bottom: BorderSide(color: kBottomAppBar)),
+          title: Text(
+            kHourglass,
+            style: kAppBarStyle,
+          ),
+          centerTitle: true,
         ),
-        centerTitle: true,
-      ),
-      body: Column(
-        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-        children: [
-          Center(
-            child: Text(
-              'Ready To Test Your Knowledge And Challenge Others',
-              style: kChallenge,
-              textAlign: TextAlign.center,
-            ),
-          ),
-          Center(
-            child: Text(
-              'Answer As Much Questions Correctly Within 2 Minutes',
-              style: kChallenge,
-              textAlign: TextAlign.center,
-            ),
-          ),
-          CustomButton(
-            containerContent: Center(
+        body: Column(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          children: [
+            Center(
               child: Text(
-                'Quiz Me!',
-                style: kTextButtonStyle,
+                'Ready To Test Your Knowledge And Challenge Others',
+                style: kChallenge,
+                textAlign: TextAlign.center,
               ),
             ),
-            onPress: () {
-              Navigator.pushReplacement(
-                context,
-                MaterialPageRoute(
-                  builder: ((context) => QuizPage()),
+            Center(
+              child: Text(
+                'Answer As Much Questions Correctly Within 2 Minutes',
+                style: kChallenge,
+                textAlign: TextAlign.center,
+              ),
+            ),
+            CustomButton(
+              containerContent: Center(
+                child: Text(
+                  'Quiz Me!',
+                  style: kTextButtonStyle,
                 ),
-              );
-            },
-          ),
-        ],
+              ),
+              onPress: () {
+                Navigator.pushReplacement(
+                  context,
+                  MaterialPageRoute(
+                    builder: ((context) => QuizPage()),
+                  ),
+                );
+              },
+            ),
+          ],
+        ),
+        bottomNavigationBar: BottomNavBar(),
       ),
-      bottomNavigationBar: BottomNavBar(),
     );
   }
 }
