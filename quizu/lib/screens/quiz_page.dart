@@ -4,6 +4,7 @@ import 'dart:async';
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
+import 'package:quizu/Components/answers.dart';
 import 'package:quizu/Components/networking.dart';
 import 'package:quizu/Components/new_button.dart';
 import 'package:quizu/Components/quiz.dart';
@@ -68,7 +69,7 @@ class _QuizPageState extends State<QuizPage> {
     helper.sendScore(counter);
   }
 
-  void changeData() {
+  void updateData() {
     if (!quiz.isFinshed()) {
       question = quiz.getText();
       a = quiz.getAnswerText('a');
@@ -79,6 +80,7 @@ class _QuizPageState extends State<QuizPage> {
       _timer.cancel();
       counter++;
       sendScore();
+      quiz.reset();
       Navigator.pushReplacement(
           context,
           MaterialPageRoute(
@@ -89,13 +91,10 @@ class _QuizPageState extends State<QuizPage> {
   @override
   void initState() {
     super.initState();
-
+    quiz.reset();
     getInfo();
-    setState(() {
-      _isLoading = false;
-    });
     _timer = Timer.periodic(const Duration(seconds: 1), (timer) {
-      changeData();
+      updateData();
       setState(() {
         if (seconds > 0) {
           seconds--;
@@ -107,6 +106,7 @@ class _QuizPageState extends State<QuizPage> {
               MaterialPageRoute(
                   builder: ((context) => FinishedScreen(score: counter))));
         }
+        _isLoading = false;
       });
     });
   }
@@ -141,80 +141,63 @@ class _QuizPageState extends State<QuizPage> {
                             SizedBox(
                               height: 30,
                             ),
-                            Center(
-                              child: Text(
-                                question,
-                                style: kQuestion,
-                                textAlign: TextAlign.center,
+                            Container(
+                              width: 300,
+                              height: 100,
+                              child: Center(
+                                child: AnimatedSwitcher(
+                                  duration: const Duration(milliseconds: 600),
+                                  child: Text(
+                                    question,
+                                    style: kQuestion,
+                                    textAlign: TextAlign.center,
+                                    key: ValueKey(question),
+                                  ),
+                                ),
                               ),
                             ),
                             SizedBox(
                               height: 20,
                             ),
-                            CustomButton(
-                              containerContent: Center(
-                                child: Text(
-                                  a,
-                                  style: kTextButtonStyle,
-                                ),
-                              ),
-                              onPress: () {
-                                setState(
-                                  () {
-                                    checkAnswer('a')
+                            Container(
+                              margin: EdgeInsets.only(top: 15),
+                              child: Column(
+                                children: [
+                                  answer(
+                                    a,
+                                    (() => checkAnswer('a')
                                         ? quiz.nextQuestion()
-                                        : callWrong();
-                                  },
-                                );
-                              },
-                            ),
-                            SizedBox(
-                              height: 10,
-                            ),
-                            CustomButton(
-                              containerContent: Center(
-                                child: Text(
-                                  b,
-                                  style: kTextButtonStyle,
-                                ),
+                                        : callWrong()),
+                                  ),
+                                  SizedBox(
+                                    height: 10,
+                                  ),
+                                  answer(
+                                    b,
+                                    (() => checkAnswer('b')
+                                        ? quiz.nextQuestion()
+                                        : callWrong()),
+                                  ),
+                                  SizedBox(
+                                    height: 10,
+                                  ),
+                                  answer(
+                                    c,
+                                    (() => checkAnswer('c')
+                                        ? quiz.nextQuestion()
+                                        : callWrong()),
+                                  ),
+                                  SizedBox(
+                                    height: 10,
+                                  ),
+                                  answer(
+                                    d,
+                                    (() => checkAnswer('d')
+                                        ? quiz.nextQuestion()
+                                        : callWrong()),
+                                  ),
+                                ],
                               ),
-                              onPress: () {
-                                checkAnswer('b')
-                                    ? quiz.nextQuestion()
-                                    : callWrong();
-                              },
-                            ),
-                            SizedBox(
-                              height: 10,
-                            ),
-                            CustomButton(
-                              containerContent: Center(
-                                child: Text(
-                                  c,
-                                  style: kTextButtonStyle,
-                                ),
-                              ),
-                              onPress: () {
-                                checkAnswer('c')
-                                    ? quiz.nextQuestion()
-                                    : callWrong();
-                              },
-                            ),
-                            SizedBox(
-                              height: 10,
-                            ),
-                            CustomButton(
-                              containerContent: Center(
-                                child: Text(
-                                  d,
-                                  style: kTextButtonStyle,
-                                ),
-                              ),
-                              onPress: () {
-                                checkAnswer('d')
-                                    ? quiz.nextQuestion()
-                                    : callWrong();
-                              },
                             ),
                             SizedBox(
                               height: 10,

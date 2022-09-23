@@ -26,10 +26,6 @@ class NetworkingHelper {
     http.Response res = await http
         .post(Uri.parse(loginUrl), body: {'OTP': '0000', 'mobile': '09'});
     if (res.statusCode >= 200 || res.statusCode < 400) {
-      print(res.body);
-      dynamic data = await jsonDecode(res.body);
-      String token = data['token'];
-      print(token);
       return jsonDecode(res.body);
     }
   }
@@ -38,7 +34,6 @@ class NetworkingHelper {
     http.Response res = await http.post(Uri.parse(nameUrl),
         body: {'name': 'foo'}, headers: {'Authorization': myToken});
     if (res.statusCode >= 200 || res.statusCode < 400) {
-      print(res.body);
       return jsonDecode(res.body);
     }
   }
@@ -47,7 +42,6 @@ class NetworkingHelper {
     http.Response res = await http
         .get(Uri.parse(boardUrl), headers: {'Authorization': myToken});
     if (res.statusCode >= 200 || res.statusCode < 400) {
-      print(res.body);
       return jsonDecode(res.body);
     }
   }
@@ -56,7 +50,6 @@ class NetworkingHelper {
     http.Response res =
         await http.get(Uri.parse(infoUrl), headers: {'Authorization': myToken});
     if (res.statusCode >= 200 || res.statusCode < 400) {
-      print(res.body.isNotEmpty);
       return jsonDecode(res.body);
     } else {
       print(res.statusCode);
@@ -68,7 +61,6 @@ class NetworkingHelper {
     http.Response res = await http
         .get(Uri.parse(questionsUrl), headers: {'Authorization': myToken});
     if (res.statusCode >= 200 || res.statusCode < 400) {
-      print(res.body);
       dynamic dataParsed = await jsonDecode(res.body);
       for (dynamic item in dataParsed) {
         Question question = Question.fromJson(item);
@@ -84,7 +76,6 @@ class NetworkingHelper {
     http.Response res = await http.post(Uri.parse(sendScoreUrl),
         body: {'score': score.toString()}, headers: {'Authorization': myToken});
     if (res.statusCode >= 200 || res.statusCode < 400) {
-      print(res.body);
     } else {
       print(res.statusCode);
     }

@@ -53,8 +53,12 @@ class _QuizMeState extends State<QuizMe> {
               ),
             ),
             onPress: () {
-              Navigator.pushReplacement(context,
-                  MaterialPageRoute(builder: ((context) => QuizPage())));
+              Navigator.pushReplacement(
+                context,
+                MaterialPageRoute(
+                  builder: ((context) => QuizPage()),
+                ),
+              );
             },
           ),
         ],

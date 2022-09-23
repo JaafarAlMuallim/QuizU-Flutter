@@ -7,6 +7,7 @@ class Quiz {
 
   createQuiz(List<Question> questions) {
     _allQuestions = questions;
+    _current = 0;
   }
 
   void nextQuestion() {

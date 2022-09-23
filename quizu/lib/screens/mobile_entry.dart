@@ -137,46 +137,6 @@ class MobileEntryState extends State<MobileEntry> {
                               );
                             }
                           }),
-
-                      // Expanded(
-                      //   flex: 1,
-                      //   child: Padding(
-                      //     padding: EdgeInsets.all(55),
-                      //     child: MyContainer(
-                      //       color: kRoundButtonColor,
-                      //       containerContent: Center(
-                      //         child: Text(
-                      //           'Start',
-                      //           style: kTextButtonStyle2,
-                      //         ),
-                      //       ),
-                      //       onPress: () async {
-                      //         isValid = await PhoneNumberUtil()
-                      //             .validate(mobileNum, regionCode: region.code);
-                      //         print(isValid);
-                      //         if (isValid) {
-                      //           Navigator.pushReplacement(
-                      //             context,
-                      //             MaterialPageRoute(
-                      //               builder: (context) => OTPShow(
-                      //                 mobileNum: mobileNum,
-                      //               ),
-                      //             ),
-                      //           );
-                      //         } else {
-                      //           Navigator.push(
-                      //             context,
-                      //             MaterialPageRoute(
-                      //               builder: (context) => ErrorPage(
-                      //                 text: 'Check Your Phone Number',
-                      //               ),
-                      //             ),
-                      //           );
-                      //         }
-                      //       },
-                      //     ),
-                      //   ),
-                      // ),
                     ],
                   ),
                 ),
