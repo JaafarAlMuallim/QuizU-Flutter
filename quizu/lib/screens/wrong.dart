@@ -1,6 +1,7 @@
 // ignore_for_file: prefer_const_constructors
 
 import 'package:flutter/material.dart';
+import 'package:lottie/lottie.dart';
 import 'package:quizu/Components/new_button.dart';
 import 'package:quizu/constants.dart';
 import 'package:quizu/screens/quiz_me.dart';
@@ -40,25 +41,14 @@ class _WrongPageState extends State<WrongPage> {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Container(
-                  margin: EdgeInsets.all(30),
-                  child: Image.asset(
-                    'images/cryingEmoji.png',
-                    width: 170,
-                    height: 170,
-                  ),
+                Lottie.asset(
+                  'animations/Wrong.json',
                 ),
-                Container(
-                  margin: EdgeInsets.all(30),
-                  child: Padding(
-                    padding: EdgeInsets.all(10),
-                    child: Text(
-                      'Wrong Answer',
-                      textAlign: TextAlign.center,
-                      style: TextStyle(
-                        fontSize: 40,
-                      ),
-                    ),
+                Text(
+                  'Wrong Answer',
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                    fontSize: 40,
                   ),
                 ),
                 SizedBox(
