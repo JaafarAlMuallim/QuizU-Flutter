@@ -2,6 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:lottie/lottie.dart';
 import 'package:quizu/Components/bottom_navbar.dart';
 import 'package:quizu/constants.dart';
 import 'package:quizu/screens/quiz_me.dart';
@@ -17,6 +18,25 @@ class FinishedScreen extends StatefulWidget {
 }
 
 class _FinishedScreenState extends State<FinishedScreen> {
+  late String checkAnswer;
+  void checkScore() {
+    if (widget.score >= 25) {
+      checkAnswer = 'Gold.json';
+    } else if (widget.score >= 20) {
+      checkAnswer = 'Silver.json';
+    } else if (widget.score >= 15) {
+      checkAnswer = 'Bronze.json';
+    } else {
+      checkAnswer = 'Flags.json';
+    }
+  }
+
+  @override
+  void initState() {
+    checkScore();
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -38,13 +58,12 @@ class _FinishedScreenState extends State<FinishedScreen> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Container(
-                  margin: EdgeInsets.all(30),
-                  child: Image.asset(
-                    'images/FinishLine.png',
-                    width: 175,
-                    height: 170,
-                  ),
-                ),
+                    margin: EdgeInsets.all(30),
+                    child: Lottie.asset(
+                      'animations/$checkAnswer',
+                      height: 170,
+                      width: 175,
+                    )),
                 SizedBox(
                   height: 30,
                 ),

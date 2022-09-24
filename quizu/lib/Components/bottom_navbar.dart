@@ -1,6 +1,7 @@
 // ignore_for_file: prefer_const_constructors
 
 import 'package:flutter/material.dart';
+import 'package:quizu/Components/custom_route.dart';
 import 'package:quizu/constants.dart';
 import 'package:quizu/screens/leaderboard.dart';
 import 'package:quizu/screens/profile.dart';
@@ -35,35 +36,34 @@ class _BottomNavBarState extends State<BottomNavBar> {
                   setState(
                     () {
                       if (_selectedIndex != 0) {
-                        _selectedIndex = 0;
                         Navigator.pushReplacement(
                             context,
-                            MaterialPageRoute(
-                                builder: ((context) => QuizMe())));
+                            CustomRoute(
+                                child: QuizMe(),
+                                direction: AxisDirection.right));
+                        _selectedIndex = 0;
                       }
                     },
                   );
                 },
               ),
               IconBottomBar(
-                icon: Icons.leaderboard,
-                selected: _selectedIndex == 1,
-                onPressed: () {
-                  setState(
-                    () {
+                  icon: Icons.leaderboard,
+                  selected: _selectedIndex == 1,
+                  onPressed: () {
+                    setState(() {
                       if (_selectedIndex != 1) {
-                        _selectedIndex = 1;
                         Navigator.pushReplacement(
-                          context,
-                          MaterialPageRoute(
-                            builder: ((context) => LeaderBoard()),
-                          ),
-                        );
+                            context,
+                            CustomRoute(
+                                child: LeaderBoard(),
+                                direction: _selectedIndex <= 1
+                                    ? AxisDirection.left
+                                    : AxisDirection.right));
+                        _selectedIndex = 1;
                       }
-                    },
-                  );
-                },
-              ),
+                    });
+                  }),
               IconBottomBar(
                 icon: Icons.account_circle,
                 selected: _selectedIndex == 2,
@@ -71,13 +71,12 @@ class _BottomNavBarState extends State<BottomNavBar> {
                   setState(
                     () {
                       if (_selectedIndex != 2) {
-                        _selectedIndex = 2;
                         Navigator.pushReplacement(
-                          context,
-                          MaterialPageRoute(
-                            builder: ((context) => ShowProfile()),
-                          ),
-                        );
+                            context,
+                            CustomRoute(
+                                child: ShowProfile(),
+                                direction: AxisDirection.left));
+                        _selectedIndex = 2;
                       }
                     },
                   );

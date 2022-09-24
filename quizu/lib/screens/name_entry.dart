@@ -30,7 +30,7 @@ class _NameEntryState extends State<NameEntry> {
     _isLoading = true;
     dynamic data = await helper.login(widget.otp, widget.mobileNum);
     token = data['token'];
-    _newUser = data['msg'] == 'user created!';
+    _newUser = data['message'] == 'user created!';
     // token = await SharedPrefUtils.saveStr('token', token);
     setState(() {
       _isLoading = false;

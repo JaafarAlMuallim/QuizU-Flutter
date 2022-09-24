@@ -2,6 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:quizu/Components/bottom_navbar.dart';
+import 'package:quizu/Components/networking.dart';
 import 'package:quizu/Components/spin_kit.dart';
 import 'package:quizu/constants.dart';
 
@@ -15,23 +16,25 @@ class ShowProfile extends StatefulWidget {
 class _ShowProfileState extends State<ShowProfile> {
   String? name;
   String mobile = '';
-  final bool _isLoading = false;
+  bool _isLoading = false;
 
-  // void getInfo() async {
-  //   _isLoading = true;
-  //   NetworkingHelper helper = NetworkingHelper();
-  //   dynamic data = await helper.getUserInfo();
-  //   name = data['name'];
-  //   mobile = data['mobile'];
-  //   setState(() {
-  //     _isLoading = false;
-  //   });
-  // }
+  void getInfo() async {
+    _isLoading = true;
+    NetworkingHelper helper = NetworkingHelper();
+    dynamic data = await helper.getUserInfo();
+    name = data['name'];
+    mobile = data['mobile'];
+    if (mounted) {
+      setState(() {
+        _isLoading = false;
+      });
+    }
+  }
 
   @override
   void initState() {
     super.initState();
-    // getInfo();
+    getInfo();
   }
 
   @override

@@ -35,33 +35,6 @@ class _LeaderBoardState extends State<LeaderBoard> {
     }
   }
 
-  Widget namesColumn() {
-    List<Widget> names = [];
-    for (String top in tops) {
-      names.add(Center(
-        child: Text(
-          top,
-          style: kSubtitleStyle,
-        ),
-      ));
-    }
-    return Column(mainAxisAlignment: MainAxisAlignment.center, children: names);
-  }
-
-  Widget scoresColumn() {
-    List<Widget> topScores = [];
-    for (int score in scores) {
-      topScores.add(Center(
-        child: Text(
-          '$score',
-          style: kSubtitleStyle,
-        ),
-      ));
-    }
-    return Column(
-        mainAxisAlignment: MainAxisAlignment.center, children: topScores);
-  }
-
   @override
   void initState() {
     super.initState();
@@ -98,7 +71,20 @@ class _LeaderBoardState extends State<LeaderBoard> {
                       ),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceAround,
-                        children: [namesColumn(), scoresColumn()],
+                        children: [
+                          Column(
+                              children: tops
+                                  .map((e) => Text(
+                                        e,
+                                        style: kSubtitleStyle,
+                                      ))
+                                  .toList()),
+                          Column(
+                              children: scores
+                                  .map((e) =>
+                                      Text(e.toString(), style: kSubtitleStyle))
+                                  .toList())
+                        ],
                       ),
                     ],
                   ),
