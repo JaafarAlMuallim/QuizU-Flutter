@@ -38,8 +38,6 @@ class _QuizPageState extends State<QuizPage> {
   }
 
   bool checkAnswer(String pickedAnswer) {
-    print('picked $pickedAnswer');
-    print(quiz.getFinalAnswer());
     if (pickedAnswer == quiz.getFinalAnswer()) {
       counter++;
       return true;
