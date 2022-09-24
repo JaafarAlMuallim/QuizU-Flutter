@@ -34,10 +34,6 @@ class _QuizPageState extends State<QuizPage> {
     int min = seconds ~/ 60;
 
     int second = seconds - (min * 60);
-    if (min == 0) {
-      return '$second';
-    }
-
     return '${min > 0 ? "0$min:" : ''}${second < 10 ? '0$second' : second}';
   }
 
