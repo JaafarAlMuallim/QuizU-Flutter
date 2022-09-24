@@ -29,11 +29,6 @@ class _QuizPageState extends State<QuizPage> {
   late Timer _timer;
   int counter = 0;
   bool _isLoading = false;
-  String question = '';
-  String a = '';
-  String b = '';
-  String c = '';
-  String d = '';
 
   String intToTimeLeft(int seconds) {
     int min = seconds ~/ 60;
@@ -47,6 +42,8 @@ class _QuizPageState extends State<QuizPage> {
   }
 
   bool checkAnswer(String pickedAnswer) {
+    print('picked $pickedAnswer');
+    print(quiz.getFinalAnswer());
     if (pickedAnswer == quiz.getFinalAnswer()) {
       counter++;
       return true;
@@ -65,14 +62,11 @@ class _QuizPageState extends State<QuizPage> {
 
   void updateData() {
     if (!quiz.isFinshed()) {
-      question = quiz.getText();
-      a = quiz.getAnswerText('a');
-      b = quiz.getAnswerText('b');
-      c = quiz.getAnswerText('c');
-      d = quiz.getAnswerText('d');
+      setState(
+        () => quiz.nextQuestion(),
+      );
     } else {
       _timer.cancel();
-      counter++;
       sendScore();
       quiz.reset();
       Navigator.pushReplacement(
@@ -83,11 +77,11 @@ class _QuizPageState extends State<QuizPage> {
   }
 
   void startTimer() {
+    updateData();
+    quiz.reset();
     _timer = Timer.periodic(const Duration(seconds: 1), (timer) {
-      quiz.reset();
       if (mounted) {
         setState(() {
-          updateData();
           if (seconds > 0) {
             seconds--;
           } else if (seconds <= 0 || quiz.isFinshed()) {
@@ -108,7 +102,9 @@ class _QuizPageState extends State<QuizPage> {
   void initState() {
     super.initState();
     quiz.reset();
-    getInfo().then((value) => startTimer());
+    getInfo().then((value) {
+      startTimer();
+    });
   }
 
   Future<void> getInfo() async {
@@ -151,10 +147,10 @@ class _QuizPageState extends State<QuizPage> {
                                 child: AnimatedSwitcher(
                                   duration: const Duration(milliseconds: 600),
                                   child: Text(
-                                    question,
+                                    quiz.getText(),
                                     style: kQuestion,
                                     textAlign: TextAlign.center,
-                                    key: ValueKey(question),
+                                    key: ValueKey(quiz.getText()),
                                   ),
                                 ),
                               ),
@@ -167,38 +163,38 @@ class _QuizPageState extends State<QuizPage> {
                               child: Column(
                                 children: [
                                   answer(
-                                    a,
+                                    quiz.getAnswerText('a'),
                                     (() => checkAnswer('a')
-                                        ? quiz.nextQuestion()
+                                        ? updateData()
                                         : callWrong()),
                                   ),
                                   SizedBox(
                                     height: 10,
                                   ),
                                   answer(
-                                    b,
+                                    quiz.getAnswerText('b'),
                                     (() => checkAnswer('b')
-                                        ? quiz.nextQuestion()
+                                        ? updateData()
                                         : callWrong()),
                                   ),
                                   SizedBox(
                                     height: 10,
                                   ),
                                   answer(
-                                    c,
+                                    quiz.getAnswerText('c'),
                                     (() => checkAnswer('c')
-                                        ? quiz.nextQuestion()
+                                        ? updateData()
                                         : callWrong()),
                                   ),
                                   SizedBox(
                                     height: 10,
                                   ),
                                   answer(
-                                    d,
+                                    quiz.getAnswerText('d'),
                                     (() => checkAnswer('d')
-                                        ? quiz.nextQuestion()
+                                        ? updateData()
                                         : callWrong()),
-                                  ),
+                                  )
                                 ],
                               ),
                             ),
@@ -228,7 +224,7 @@ class _QuizPageState extends State<QuizPage> {
                                   onPress: () {
                                     setState(() {
                                       skips--;
-                                      quiz.nextQuestion();
+                                      updateData();
                                     });
                                   },
                                   color: Color(0xFF33277B)),
