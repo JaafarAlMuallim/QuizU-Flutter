@@ -100,7 +100,7 @@ class _ShowProfileState extends State<ShowProfile> {
                           style: kInfoStyle,
                         ),
                         Text(
-                          'Mobile: +966$mobile',
+                          'Mobile: 0$mobile',
                           style: kInfoStyle,
                         ),
                         SizedBox(
