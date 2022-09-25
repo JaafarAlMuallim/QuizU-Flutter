@@ -9,14 +9,17 @@ import 'package:quizu/screens/quiz_me.dart';
 
 class BottomNavBar extends StatefulWidget {
   const BottomNavBar({super.key});
+  static int _selectedIndex = 0;
+  static reset() {
+    _selectedIndex = 0;
+  }
 
   @override
   State<BottomNavBar> createState() => _BottomNavBarState();
 }
 
 class _BottomNavBarState extends State<BottomNavBar> {
-  static int _selectedIndex = 0;
-
+  int _currentIndex = BottomNavBar._selectedIndex;
   @override
   Widget build(BuildContext context) {
     return BottomAppBar(
@@ -31,17 +34,17 @@ class _BottomNavBarState extends State<BottomNavBar> {
             children: [
               IconBottomBar(
                 icon: Icons.home,
-                selected: _selectedIndex == 0,
+                selected: BottomNavBar._selectedIndex == 0,
                 onPressed: () {
                   setState(
                     () {
-                      if (_selectedIndex != 0) {
+                      if (_currentIndex != 0) {
                         Navigator.pushReplacement(
                             context,
                             CustomRoute(
                                 child: QuizMe(),
                                 direction: AxisDirection.right));
-                        _selectedIndex = 0;
+                        _currentIndex = 0;
                       }
                     },
                   );
@@ -49,34 +52,34 @@ class _BottomNavBarState extends State<BottomNavBar> {
               ),
               IconBottomBar(
                   icon: Icons.leaderboard,
-                  selected: _selectedIndex == 1,
+                  selected: _currentIndex == 1,
                   onPressed: () {
                     setState(() {
-                      if (_selectedIndex != 1) {
+                      if (_currentIndex != 1) {
                         Navigator.pushReplacement(
                             context,
                             CustomRoute(
                                 child: LeaderBoard(),
-                                direction: _selectedIndex <= 1
+                                direction: _currentIndex <= 1
                                     ? AxisDirection.left
                                     : AxisDirection.right));
-                        _selectedIndex = 1;
+                        _currentIndex = 1;
                       }
                     });
                   }),
               IconBottomBar(
                 icon: Icons.account_circle,
-                selected: _selectedIndex == 2,
+                selected: _currentIndex == 2,
                 onPressed: () {
                   setState(
                     () {
-                      if (_selectedIndex != 2) {
+                      if (_currentIndex != 2) {
                         Navigator.pushReplacement(
                             context,
                             CustomRoute(
                                 child: ShowProfile(),
                                 direction: AxisDirection.left));
-                        _selectedIndex = 2;
+                        _currentIndex = 2;
                       }
                     },
                   );

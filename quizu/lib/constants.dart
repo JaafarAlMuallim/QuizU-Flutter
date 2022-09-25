@@ -38,6 +38,11 @@ const kTextStyle = TextStyle(
   fontSize: 36,
   fontFamily: 'TitilliumWeb',
 );
+const kInfoStyle = TextStyle(
+  color: Colors.white,
+  fontSize: 30,
+  fontFamily: 'TitilliumWeb',
+);
 const kChallenge = TextStyle(
   fontSize: 32,
   fontFamily: 'TitilliumWeb',

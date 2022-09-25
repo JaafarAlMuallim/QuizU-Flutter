@@ -2,6 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:quizu/Components/bottom_navbar.dart';
 import 'package:quizu/Components/new_button.dart';
 import 'package:quizu/Components/shared.dart';
 import 'package:quizu/constants.dart';
@@ -15,9 +16,6 @@ class OTPShow extends StatefulWidget {
 }
 
 String otp = '';
-void check() {
-  print(otp);
-}
 
 class _OTPShowState extends State<OTPShow> {
   SizedBox otpField() {
@@ -94,6 +92,8 @@ class _OTPShowState extends State<OTPShow> {
                       ),
                       onPress: () {
                         if (otp == '0000') {
+                          BottomNavBar.reset();
+                          otp = '';
                           Navigator.pushReplacement(
                             context,
                             MaterialPageRoute(

@@ -1,10 +1,12 @@
-// ignore_for_file: prefer_const_constructors
+// ignore_for_file: prefer_const_constructors, deprecated_member_use
 
 import 'package:flutter/material.dart';
 import 'package:quizu/Components/bottom_navbar.dart';
+import 'package:quizu/Components/custom_route.dart';
 import 'package:quizu/Components/networking.dart';
 import 'package:quizu/Components/spin_kit.dart';
 import 'package:quizu/constants.dart';
+import 'package:quizu/screens/mobile_entry.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class ShowProfile extends StatefulWidget {
@@ -17,12 +19,14 @@ class ShowProfile extends StatefulWidget {
 class _ShowProfileState extends State<ShowProfile> {
   String? name;
   String mobile = '';
-  bool _isLoading = false;
+  bool _isLoading = true;
   List<String> scores = [];
 
   void getInfo() async {
-    _isLoading = true;
     SharedPreferences prefs = await SharedPreferences.getInstance();
+    if (prefs.getStringList('scores') == null) {
+      await prefs.setStringList('scores', []);
+    }
     scores = prefs.getStringList('scores')!;
     NetworkingHelper helper = NetworkingHelper();
     dynamic data = await helper.getUserInfo();
@@ -33,6 +37,12 @@ class _ShowProfileState extends State<ShowProfile> {
         _isLoading = false;
       });
     }
+  }
+
+  logout() {
+    BottomNavBar.reset();
+    Navigator.pushReplacement(context,
+        CustomRoute(child: MobileEntry(), direction: AxisDirection.left));
   }
 
   @override
@@ -59,25 +69,73 @@ class _ShowProfileState extends State<ShowProfile> {
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
+                    SizedBox(
+                      height: 15,
+                    ),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.end,
-                      children: [Icon(Icons.logout, size: 75)],
+                      children: [
+                        GestureDetector(
+                            onTap: () async {
+                              SharedPreferences prefs =
+                                  await SharedPreferences.getInstance();
+                              prefs.clear();
+                              logout();
+                            },
+                            child: Icon(Icons.logout, size: 50))
+                      ],
                     ),
                     Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         Text(
+                          'Profile',
+                          style: kTitleStyle,
+                        ),
+                        SizedBox(
+                          height: 20,
+                        ),
+                        Text(
                           'Name: $name',
-                          style: kTextStyle,
+                          style: kInfoStyle,
                         ),
                         Text(
                           'Mobile: +966$mobile',
+                          style: kInfoStyle,
+                        ),
+                        SizedBox(
+                          height: 20,
+                        ),
+                        Divider(
+                          color: Colors.white,
+                          thickness: 4,
+                        ),
+                        SizedBox(
+                          height: 20,
+                        ),
+                        Text(
+                          'My Scores',
                           style: kTextStyle,
                         ),
+                        SizedBox(
+                          height: 15,
+                        ),
                         Column(
-                          children: scores
-                              .map((e) => Text(e, style: kNumberStyle))
-                              .toList(),
+                          mainAxisAlignment: MainAxisAlignment.spaceAround,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: scores.isEmpty
+                              ? [
+                                  Center(
+                                    child: Text(
+                                      'Start a Quiz To Save Scores in This Session!',
+                                      style: kInfoStyle,
+                                      textAlign: TextAlign.center,
+                                    ),
+                                  )
+                                ]
+                              : scores
+                                  .map((e) => Text(e, style: kInfoStyle))
+                                  .toList(),
                         )
                       ],
                     ),

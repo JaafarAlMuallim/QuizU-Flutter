@@ -25,12 +25,13 @@ class QuizPage extends StatefulWidget {
 }
 
 class _QuizPageState extends State<QuizPage> {
-  int seconds = 120;
+  int seconds = 10;
   int skips = 1;
   late Timer _timer;
   int counter = 0;
-  bool _isLoading = false;
+  bool _isLoading = true;
   late List<String> prevScores = [];
+  var dt = DateTime.now();
 
   String intToTimeLeft(int seconds) {
     int min = seconds ~/ 60;
@@ -58,7 +59,12 @@ class _QuizPageState extends State<QuizPage> {
 
   Future<void> setScore() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    prevScores.add(counter.toString());
+    String time = 'AM';
+    if (dt.hour > 12) {
+      time = 'PM';
+    }
+    prevScores.add(
+        '${dt.hour % 12}:${dt.minute < 10 ? '0${dt.minute}' : dt.minute} $time ${dt.day}/${dt.month}/${dt.year}          $counter');
     await prefs.setStringList('scores', prevScores);
   }
 
@@ -100,6 +106,15 @@ class _QuizPageState extends State<QuizPage> {
     });
   }
 
+  Future<void> getInfo() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    if (prefs.containsKey('scores')) {
+      prevScores = prefs.getStringList('scores')!;
+    }
+    dynamic data = await helper.getQuestions();
+    quiz.createQuiz(data);
+  }
+
   @override
   void initState() {
     super.initState();
@@ -107,16 +122,6 @@ class _QuizPageState extends State<QuizPage> {
     getInfo().then((value) {
       startTimer();
     });
-  }
-
-  Future<void> getInfo() async {
-    _isLoading = true;
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    if (prefs.containsKey('scores')) {
-      prevScores = prefs.getStringList('scores')!;
-    }
-    dynamic data = await helper.getQuestions();
-    quiz.createQuiz(data);
   }
 
   @override
@@ -242,7 +247,6 @@ class _QuizPageState extends State<QuizPage> {
                   ),
                 ],
               ),
-        // bottomNavigationBar: BottomNavBar(),
       ),
     );
   }

@@ -16,10 +16,9 @@ class LeaderBoard extends StatefulWidget {
 class _LeaderBoardState extends State<LeaderBoard> {
   List<String> tops = [];
   List<int> scores = [];
-  bool _isLoading = false;
+  bool _isLoading = true;
 
   void getTop() async {
-    _isLoading = true;
     NetworkingHelper helper = NetworkingHelper();
     dynamic data = await helper.getTopTen();
     for (int i = 0; i < 10; i++) {

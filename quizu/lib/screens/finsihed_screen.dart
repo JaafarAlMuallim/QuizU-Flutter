@@ -27,7 +27,7 @@ class _FinishedScreenState extends State<FinishedScreen> {
     } else if (widget.score >= 15) {
       checkAnswer = 'Bronze.json';
     } else {
-      checkAnswer = 'Flags.json';
+      checkAnswer = 'Finished.json';
     }
   }
 
