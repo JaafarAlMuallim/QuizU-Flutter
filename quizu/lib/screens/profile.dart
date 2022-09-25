@@ -5,6 +5,7 @@ import 'package:quizu/Components/bottom_navbar.dart';
 import 'package:quizu/Components/networking.dart';
 import 'package:quizu/Components/spin_kit.dart';
 import 'package:quizu/constants.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class ShowProfile extends StatefulWidget {
   const ShowProfile({super.key});
@@ -17,9 +18,12 @@ class _ShowProfileState extends State<ShowProfile> {
   String? name;
   String mobile = '';
   bool _isLoading = false;
+  List<String> scores = [];
 
   void getInfo() async {
     _isLoading = true;
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    scores = prefs.getStringList('scores')!;
     NetworkingHelper helper = NetworkingHelper();
     dynamic data = await helper.getUserInfo();
     name = data['name'];
@@ -50,11 +54,17 @@ class _ShowProfileState extends State<ShowProfile> {
         ),
         body: _isLoading
             ? loading()
-            : Center(
-                child: SingleChildScrollView(
-                  physics: const BouncingScrollPhysics(),
-                  child: Center(
-                    child: Column(
+            : SingleChildScrollView(
+                physics: const BouncingScrollPhysics(),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      children: [Icon(Icons.logout, size: 75)],
+                    ),
+                    Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         Text(
                           'Name: $name',
@@ -64,9 +74,14 @@ class _ShowProfileState extends State<ShowProfile> {
                           'Mobile: +966$mobile',
                           style: kTextStyle,
                         ),
+                        Column(
+                          children: scores
+                              .map((e) => Text(e, style: kNumberStyle))
+                              .toList(),
+                        )
                       ],
                     ),
-                  ),
+                  ],
                 ),
               ),
         bottomNavigationBar: BottomNavBar(),

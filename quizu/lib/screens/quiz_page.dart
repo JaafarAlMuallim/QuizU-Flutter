@@ -12,6 +12,7 @@ import 'package:quizu/Components/spin_kit.dart';
 import 'package:quizu/constants.dart';
 import 'package:quizu/screens/finsihed_screen.dart';
 import 'package:quizu/screens/wrong.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 Quiz quiz = Quiz();
 NetworkingHelper helper = NetworkingHelper();
@@ -29,6 +30,7 @@ class _QuizPageState extends State<QuizPage> {
   late Timer _timer;
   int counter = 0;
   bool _isLoading = false;
+  late List<String> prevScores = [];
 
   String intToTimeLeft(int seconds) {
     int min = seconds ~/ 60;
@@ -51,7 +53,13 @@ class _QuizPageState extends State<QuizPage> {
   }
 
   void sendScore() {
-    helper.sendScore(counter);
+    setScore().then((value) => helper.sendScore(counter));
+  }
+
+  Future<void> setScore() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    prevScores.add(counter.toString());
+    await prefs.setStringList('scores', prevScores);
   }
 
   void updateData() {
@@ -103,6 +111,10 @@ class _QuizPageState extends State<QuizPage> {
 
   Future<void> getInfo() async {
     _isLoading = true;
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    if (prefs.containsKey('scores')) {
+      prevScores = prefs.getStringList('scores')!;
+    }
     dynamic data = await helper.getQuestions();
     quiz.createQuiz(data);
   }
