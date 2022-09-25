@@ -25,13 +25,14 @@ class QuizPage extends StatefulWidget {
 }
 
 class _QuizPageState extends State<QuizPage> {
-  int seconds = 10;
+  int seconds = 5;
   int skips = 1;
   late Timer _timer;
   int counter = 0;
   bool _isLoading = true;
   late List<String> prevScores = [];
   var dt = DateTime.now();
+  int length = 0;
 
   String intToTimeLeft(int seconds) {
     int min = seconds ~/ 60;
@@ -64,7 +65,7 @@ class _QuizPageState extends State<QuizPage> {
       time = 'PM';
     }
     prevScores.add(
-        '${dt.hour % 12}:${dt.minute < 10 ? '0${dt.minute}' : dt.minute} $time ${dt.day}/${dt.month}/${dt.year}          $counter');
+        '${dt.hour % 12}:${dt.minute < 10 ? '0${dt.minute}' : dt.minute} $time ${dt.day}/${dt.month}/${dt.year}          ${counter < 10 ? '0$counter' : counter}');
     await prefs.setStringList('scores', prevScores);
   }
 
@@ -113,6 +114,7 @@ class _QuizPageState extends State<QuizPage> {
     }
     dynamic data = await helper.getQuestions();
     quiz.createQuiz(data);
+    length = Quiz.length;
   }
 
   @override
@@ -151,6 +153,12 @@ class _QuizPageState extends State<QuizPage> {
                                 style: kNumberStyle,
                               ),
                             ),
+                            Text('${Quiz.current + 1} / $length',
+                                style: TextStyle(
+                                  fontFeatures: [
+                                    FontFeature.subscripts(),
+                                  ],
+                                )),
                             SizedBox(
                               width: 400,
                               height: 120,

@@ -1,4 +1,4 @@
-// ignore_for_file: prefer_const_constructors
+// ignore_for_file: prefer_const_constructors, prefer_final_fields
 
 import 'package:flutter/material.dart';
 import 'package:quizu/Components/custom_route.dart';
@@ -44,7 +44,7 @@ class _BottomNavBarState extends State<BottomNavBar> {
                             CustomRoute(
                                 child: QuizMe(),
                                 direction: AxisDirection.right));
-                        _currentIndex = 0;
+                        BottomNavBar._selectedIndex = 0;
                       }
                     },
                   );
@@ -63,7 +63,7 @@ class _BottomNavBarState extends State<BottomNavBar> {
                                 direction: _currentIndex <= 1
                                     ? AxisDirection.left
                                     : AxisDirection.right));
-                        _currentIndex = 1;
+                        BottomNavBar._selectedIndex = 1;
                       }
                     });
                   }),
@@ -79,7 +79,7 @@ class _BottomNavBarState extends State<BottomNavBar> {
                             CustomRoute(
                                 child: ShowProfile(),
                                 direction: AxisDirection.left));
-                        _currentIndex = 2;
+                        BottomNavBar._selectedIndex = 2;
                       }
                     },
                   );

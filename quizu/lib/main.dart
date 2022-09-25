@@ -38,6 +38,7 @@ class _MyAppState extends State<MyApp> {
       theme: ThemeData.dark().copyWith(
         backgroundColor: kBackgroundColor,
         scaffoldBackgroundColor: kBackgroundColor,
+        // scaffoldBackgroundColor: Colors.transparent,
         appBarTheme: const AppBarTheme(backgroundColor: kAppBarColor),
         canvasColor: kAppBarColor,
       ),

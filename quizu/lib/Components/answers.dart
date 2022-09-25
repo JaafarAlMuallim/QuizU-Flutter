@@ -9,7 +9,7 @@ Widget answer(String text, VoidCallback onPress) {
           duration: const Duration(milliseconds: 600),
           child: Text(
             text,
-            style: kTextButtonStyle,
+            style: kAnswerButtonStyle,
             key: ValueKey(text),
           ),
         ),

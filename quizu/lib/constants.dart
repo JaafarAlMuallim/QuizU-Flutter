@@ -4,12 +4,24 @@ import 'package:flutter/material.dart';
 
 const kHourglass = 'QuizU ⏳';
 
-const kBackgroundColor = Color(0xFF2E1F46);
-const kButtonColor = Color(0xFF19104E);
-const kAppBarColor = Color(0xFF190E2B);
+// const kBackgroundColor = Color(0xFF2E1F46);
+// const kBackgroundColor = Color(0xFF3C096C);
+// const kBackgroundColor = Color(0xFF421869);
+const kBackgroundColor = Color(0xFF32004f);
+// const kButtonColor = Color(0xFF19104E);
+// const kButtonColor = Color(0xFF4e2c70);
+const kButtonColor = Color(0xFF522882);
+// const kButtonColor = Color(0xFF6818a5);
+// const kAppBarColor = Color(0xFF190E2B);
+// 511f73
+// const kAppBarColor = Color(0xFF431259);
+// const kAppBarColor = Color(0xFF310055);
+const kAppBarColor = Color(0xFF190028);
 const kBottomAppBar = Color(0xFF6436AE);
-const kActivated = Color(0xFF5E6AD9);
+// const kActivated = Color(0xFF5E6AD9);
+const kActivated = Color(0xFF9f21e3);
 const kInActivated = Color(0xFF636365);
+
 const kAppBarStyle = TextStyle(
   fontSize: 32.0,
   fontFamily: 'TitilliumWeb',
@@ -22,11 +34,15 @@ var kHintStyle = TextStyle(
 var kButtonStyle = TextButton.styleFrom(
   backgroundColor: Color.fromARGB(255, 40, 46, 137),
 );
-
 const kTextButtonStyle = TextStyle(
   color: Colors.white,
   fontSize: 26,
   fontFamily: 'TitilliumWeb',
+);
+const kAnswerButtonStyle = TextStyle(
+  color: Colors.white,
+  fontSize: 26,
+  fontFamily: 'SourceSans',
 );
 const kTextInputStyle = TextStyle(
   color: Colors.black,
@@ -57,7 +73,7 @@ const kNumberStyle = TextStyle(
 const kQuestion = TextStyle(
   fontSize: 32.0,
   color: Colors.white,
-  fontFamily: 'TitilliumWeb',
+  fontFamily: 'SourceSans',
 );
 
 const kTitleStyle = TextStyle(

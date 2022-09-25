@@ -134,7 +134,11 @@ class _ShowProfileState extends State<ShowProfile> {
                                   )
                                 ]
                               : scores
-                                  .map((e) => Text(e, style: kInfoStyle))
+                                  .map((e) => Text(
+                                        e,
+                                        style: kInfoStyle,
+                                        textAlign: TextAlign.center,
+                                      ))
                                   .toList(),
                         )
                       ],
