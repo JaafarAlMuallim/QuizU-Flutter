@@ -25,7 +25,7 @@ class QuizPage extends StatefulWidget {
 }
 
 class _QuizPageState extends State<QuizPage> {
-  int seconds = 120;
+  int seconds = 5;
   int skips = 1;
   late Timer _timer;
   int counter = 0;

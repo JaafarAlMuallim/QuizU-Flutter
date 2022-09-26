@@ -6,6 +6,7 @@ import 'package:http/http.dart' as http;
 import 'package:quizu/Components/question.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+const String verifyUrl = 'https://quizu.okoul.com/Token';
 const String loginUrl = 'https://quizu.okoul.com/Login';
 const String nameUrl = 'https://quizu.okoul.com/Name';
 const String boardUrl = 'https://quizu.okoul.com/TopScores';
@@ -17,9 +18,16 @@ class NetworkingHelper {
   static dynamic myToken;
 
   Future<bool> start() async {
+    bool success = false;
     SharedPreferences prefs = await SharedPreferences.getInstance();
     myToken = prefs.getString('token');
-    return myToken == null;
+    http.Response res = await http
+        .get(Uri.parse(verifyUrl), headers: {'Authorization': myToken});
+    if (res.statusCode >= 200 || res.statusCode < 400) {
+      dynamic data = await jsonDecode(res.body);
+      success = data['success'];
+    }
+    return success;
   }
 
   Future<dynamic> login(String otp, String mobile) async {
