@@ -2,6 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
+import 'package:quizu/Components/my_container.dart';
 import 'package:quizu/Components/new_button.dart';
 import 'package:quizu/constants.dart';
 import 'package:quizu/screens/quiz_me.dart';
@@ -23,55 +24,57 @@ class _WrongPageState extends State<WrongPage> {
   @override
   Widget build(BuildContext context) {
     return SafeArea(
-      child: Scaffold(
-          body: Column(
-        crossAxisAlignment: CrossAxisAlignment.end,
-        children: [
-          GestureDetector(
-              child: SizedBox(
-                child: Icon(
-                  Icons.close,
-                  size: 60,
-                  color: Colors.white,
-                ),
-              ),
-              onTap: () => Navigator.pushReplacement(
-                  context, MaterialPageRoute(builder: (context) => QuizMe()))),
-          Center(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Lottie.asset(
-                  'animations/Wrong.json',
-                ),
-                Text(
-                  'Wrong Answer',
-                  textAlign: TextAlign.center,
-                  style: TextStyle(
-                    fontSize: 40,
+      child: MyContainer(
+        child: Scaffold(
+            body: Column(
+          crossAxisAlignment: CrossAxisAlignment.end,
+          children: [
+            GestureDetector(
+                child: SizedBox(
+                  child: Icon(
+                    Icons.close,
+                    size: 60,
+                    color: Colors.white,
                   ),
                 ),
-                SizedBox(
-                  height: 40,
-                ),
-                CustomButton(
-                  containerContent: Center(
-                    child: Text(
-                      'Try Again',
-                      textAlign: TextAlign.center,
-                      style: kTextButtonStyle,
+                onTap: () => Navigator.pushReplacement(context,
+                    MaterialPageRoute(builder: (context) => QuizMe()))),
+            Center(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Lottie.asset(
+                    'animations/Wrong.json',
+                  ),
+                  Text(
+                    'Wrong Answer',
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                      fontSize: 40,
                     ),
                   ),
-                  onPress: () {
-                    Navigator.pushReplacement(context,
-                        MaterialPageRoute(builder: (context) => QuizPage()));
-                  },
-                ),
-              ],
+                  SizedBox(
+                    height: 40,
+                  ),
+                  CustomButton(
+                    containerContent: Center(
+                      child: Text(
+                        'Try Again',
+                        textAlign: TextAlign.center,
+                        style: kTextButtonStyle,
+                      ),
+                    ),
+                    onPress: () {
+                      Navigator.pushReplacement(context,
+                          MaterialPageRoute(builder: (context) => QuizPage()));
+                    },
+                  ),
+                ],
+              ),
             ),
-          ),
-        ],
-      )),
+          ],
+        )),
+      ),
     );
   }
 }

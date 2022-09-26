@@ -2,9 +2,11 @@
 
 import 'package:flutter/material.dart';
 import 'package:quizu/Components/bottom_navbar.dart';
+import 'package:quizu/Components/my_container.dart';
 import 'package:quizu/Components/networking.dart';
 import 'package:quizu/Components/spin_kit.dart';
 import 'package:quizu/constants.dart';
+import 'package:quizu/screens/error.dart';
 
 class LeaderBoard extends StatefulWidget {
   const LeaderBoard({super.key});
@@ -17,10 +19,11 @@ class _LeaderBoardState extends State<LeaderBoard> {
   List<String> tops = [];
   List<int> scores = [];
   bool _isLoading = true;
-
+  bool failure = false;
   void getTop() async {
     NetworkingHelper helper = NetworkingHelper();
     dynamic data = await helper.getTopTen();
+    failure = data is int;
     for (int i = 0; i < 10; i++) {
       if (data[i]['name'] != null && data[i]['score'] != null) {
         tops.add(data[i]['name']);
@@ -42,55 +45,65 @@ class _LeaderBoardState extends State<LeaderBoard> {
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: Scaffold(
-        appBar: AppBar(
-          shape: Border(bottom: BorderSide(color: kBottomAppBar)),
-          title: Text(
-            kHourglass,
-            style: kAppBarStyle,
-          ),
-          centerTitle: true,
-        ),
-        body: _isLoading
-            ? loading()
-            : Center(
-                child: SingleChildScrollView(
-                  physics: const BouncingScrollPhysics(),
-                  child: Column(
-                    children: [
-                      Center(
-                        child: Text(
-                          'Leaderboard',
-                          style: kTitleStyle,
+    return failure
+        ? ErrorPage(
+            text: 'Something Went Wrong!',
+          )
+        : SafeArea(
+            child: MyContainer(
+              child: Scaffold(
+                appBar: AppBar(
+                  shape: Border(bottom: BorderSide(color: kBottomAppBar)),
+                  title: Text(
+                    kHourglass,
+                    style: kAppBarStyle,
+                  ),
+                  centerTitle: true,
+                ),
+                body: _isLoading
+                    ? loading()
+                    : Center(
+                        child: SingleChildScrollView(
+                          physics: const BouncingScrollPhysics(),
+                          child: Column(
+                            children: [
+                              Center(
+                                child: Text(
+                                  'Leaderboard',
+                                  style: kTitleStyle,
+                                ),
+                              ),
+                              SizedBox(
+                                height: 40,
+                              ),
+                              Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceAround,
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: tops
+                                          .map((e) => Text(
+                                                e,
+                                                style: kSubtitleStyle,
+                                              ))
+                                          .toList()),
+                                  Column(
+                                      children: scores
+                                          .map((e) => Text(e.toString(),
+                                              style: kSubtitleStyle))
+                                          .toList())
+                                ],
+                              ),
+                            ],
+                          ),
                         ),
                       ),
-                      SizedBox(
-                        height: 40,
-                      ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceAround,
-                        children: [
-                          Column(
-                              children: tops
-                                  .map((e) => Text(
-                                        e,
-                                        style: kSubtitleStyle,
-                                      ))
-                                  .toList()),
-                          Column(
-                              children: scores
-                                  .map((e) =>
-                                      Text(e.toString(), style: kSubtitleStyle))
-                                  .toList())
-                        ],
-                      ),
-                    ],
-                  ),
-                ),
+                bottomNavigationBar: BottomNavBar(),
               ),
-        bottomNavigationBar: BottomNavBar(),
-      ),
-    );
+            ),
+          );
   }
 }

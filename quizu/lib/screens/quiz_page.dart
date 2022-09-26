@@ -5,11 +5,13 @@ import 'dart:ui';
 
 import 'package:flutter/material.dart';
 import 'package:quizu/Components/answers.dart';
+import 'package:quizu/Components/my_container.dart';
 import 'package:quizu/Components/networking.dart';
 import 'package:quizu/Components/new_button.dart';
 import 'package:quizu/Components/quiz.dart';
 import 'package:quizu/Components/spin_kit.dart';
 import 'package:quizu/constants.dart';
+import 'package:quizu/screens/error.dart';
 import 'package:quizu/screens/finsihed_screen.dart';
 import 'package:quizu/screens/wrong.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -33,6 +35,7 @@ class _QuizPageState extends State<QuizPage> {
   late List<String> prevScores = [];
   var dt = DateTime.now();
   int length = 0;
+  bool failure = false;
 
   String intToTimeLeft(int seconds) {
     int min = seconds ~/ 60;
@@ -113,6 +116,7 @@ class _QuizPageState extends State<QuizPage> {
       prevScores = prefs.getStringList('scores')!;
     }
     dynamic data = await helper.getQuestions();
+    failure = data is int;
     quiz.createQuiz(data);
     length = Quiz.length;
   }
@@ -128,134 +132,143 @@ class _QuizPageState extends State<QuizPage> {
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: Scaffold(
-        body: _isLoading
-            ? loading()
-            : Column(
-                children: [
-                  LinearProgressIndicator(
-                    value: seconds / 120,
-                    color: seconds < 30 ? Colors.red : Colors.green,
-                  ),
-                  SizedBox(
-                    height: 20,
-                  ),
-                  Center(
-                    child: SingleChildScrollView(
-                      physics: BouncingScrollPhysics(),
-                      child: Center(
-                        child: Column(
-                          children: [
-                            Center(
-                              child: Text(
-                                intToTimeLeft(seconds),
-                                style: kNumberStyle,
-                              ),
-                            ),
-                            Text('${Quiz.current + 1} / $length',
-                                style: TextStyle(
-                                  fontFeatures: [
-                                    FontFeature.subscripts(),
-                                  ],
-                                )),
-                            SizedBox(
-                              width: 400,
-                              height: 120,
+    return failure
+        ? ErrorPage(
+            text: 'Something Went Wrong!',
+          )
+        : SafeArea(
+            child: MyContainer(
+              child: Scaffold(
+                body: _isLoading
+                    ? loading()
+                    : Column(
+                        children: [
+                          LinearProgressIndicator(
+                            value: seconds / 120,
+                            color: seconds < 30 ? Colors.red : Colors.green,
+                            minHeight: 3,
+                          ),
+                          SizedBox(
+                            height: 20,
+                          ),
+                          Center(
+                            child: SingleChildScrollView(
+                              physics: BouncingScrollPhysics(),
                               child: Center(
-                                child: AnimatedSwitcher(
-                                  duration: const Duration(milliseconds: 600),
-                                  child: Text(
-                                    quiz.getText(),
-                                    style: kQuestion,
-                                    textAlign: TextAlign.center,
-                                    key: ValueKey(quiz.getText()),
-                                  ),
-                                ),
-                              ),
-                            ),
-                            SizedBox(
-                              height: 20,
-                            ),
-                            Container(
-                              margin: EdgeInsets.only(top: 15),
-                              child: Column(
-                                children: [
-                                  answer(
-                                    quiz.getAnswerText('a'),
-                                    (() => checkAnswer('a')
-                                        ? updateData()
-                                        : callWrong()),
-                                  ),
-                                  SizedBox(
-                                    height: 10,
-                                  ),
-                                  answer(
-                                    quiz.getAnswerText('b'),
-                                    (() => checkAnswer('b')
-                                        ? updateData()
-                                        : callWrong()),
-                                  ),
-                                  SizedBox(
-                                    height: 10,
-                                  ),
-                                  answer(
-                                    quiz.getAnswerText('c'),
-                                    (() => checkAnswer('c')
-                                        ? updateData()
-                                        : callWrong()),
-                                  ),
-                                  SizedBox(
-                                    height: 10,
-                                  ),
-                                  answer(
-                                    quiz.getAnswerText('d'),
-                                    (() => checkAnswer('d')
-                                        ? updateData()
-                                        : callWrong()),
-                                  )
-                                ],
-                              ),
-                            ),
-                            SizedBox(
-                              height: 10,
-                            ),
-                            Visibility(
-                              visible: skips == 1,
-                              child: CustomButton(
-                                  containerContent: Row(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    children: [
-                                      Text(
-                                        'Skip 🔥',
-                                        style: kTextButtonStyle,
+                                child: Column(
+                                  children: [
+                                    Center(
+                                      child: Text(
+                                        intToTimeLeft(seconds),
+                                        style: kNumberStyle,
                                       ),
-                                      Text(
-                                        '(1 remaining)',
+                                    ),
+                                    Text('${Quiz.current + 1} / $length',
                                         style: TextStyle(
                                           fontFeatures: [
                                             FontFeature.subscripts(),
                                           ],
+                                        )),
+                                    SizedBox(
+                                      width: 400,
+                                      height: 120,
+                                      child: Center(
+                                        child: AnimatedSwitcher(
+                                          duration:
+                                              const Duration(milliseconds: 400),
+                                          child: Text(
+                                            quiz.getText(),
+                                            style: kQuestion,
+                                            textAlign: TextAlign.center,
+                                            key: ValueKey(quiz.getText()),
+                                          ),
                                         ),
                                       ),
-                                    ],
-                                  ),
-                                  onPress: () {
-                                    setState(() {
-                                      skips--;
-                                      updateData();
-                                    });
-                                  },
-                                  color: Color(0xFF33277B)),
-                            )
-                          ],
-                        ),
+                                    ),
+                                    SizedBox(
+                                      height: 20,
+                                    ),
+                                    Container(
+                                      margin: EdgeInsets.only(top: 15),
+                                      child: Column(
+                                        children: [
+                                          answer(
+                                            quiz.getAnswerText('a'),
+                                            (() => checkAnswer('a')
+                                                ? updateData()
+                                                : callWrong()),
+                                          ),
+                                          SizedBox(
+                                            height: 10,
+                                          ),
+                                          answer(
+                                            quiz.getAnswerText('b'),
+                                            (() => checkAnswer('b')
+                                                ? updateData()
+                                                : callWrong()),
+                                          ),
+                                          SizedBox(
+                                            height: 10,
+                                          ),
+                                          answer(
+                                            quiz.getAnswerText('c'),
+                                            (() => checkAnswer('c')
+                                                ? updateData()
+                                                : callWrong()),
+                                          ),
+                                          SizedBox(
+                                            height: 10,
+                                          ),
+                                          answer(
+                                            quiz.getAnswerText('d'),
+                                            (() => checkAnswer('d')
+                                                ? updateData()
+                                                : callWrong()),
+                                          )
+                                        ],
+                                      ),
+                                    ),
+                                    SizedBox(
+                                      height: 10,
+                                    ),
+                                    Visibility(
+                                      visible: skips == 1,
+                                      child: CustomButton(
+                                          containerContent: Row(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.center,
+                                            children: [
+                                              Text(
+                                                'Skip 🔥',
+                                                style: kTextButtonStyle,
+                                              ),
+                                              Text(
+                                                '(1 remaining)',
+                                                style: TextStyle(
+                                                  fontFeatures: [
+                                                    FontFeature.subscripts(),
+                                                  ],
+                                                ),
+                                              ),
+                                            ],
+                                          ),
+                                          onPress: () {
+                                            setState(() {
+                                              skips--;
+                                              updateData();
+                                            });
+                                          },
+                                          color: Color(0xFF33277B)),
+                                    )
+                                  ],
+                                ),
+                              ),
+                            ),
+                          ),
+                        ],
                       ),
-                    ),
-                  ),
-                ],
               ),
-      ),
-    );
+            ),
+          );
   }
 }

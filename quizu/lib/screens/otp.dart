@@ -2,6 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:quizu/Components/my_container.dart';
 import 'package:quizu/Components/new_button.dart';
 import 'package:quizu/Components/shared.dart';
 import 'package:quizu/constants.dart';
@@ -29,7 +30,6 @@ class _OTPShowState extends State<OTPShow> {
         onChanged: (value) {
           if (value.length == 1) {
             otp += value;
-            print(otp);
             !last ? FocusScope.of(context).nextFocus() : checkOTP(otp);
           }
         },
@@ -65,57 +65,59 @@ class _OTPShowState extends State<OTPShow> {
   @override
   Widget build(BuildContext context) {
     return SafeArea(
-      child: Scaffold(
-        body: SafeArea(
-          child: Center(
-            child: SingleChildScrollView(
-              physics: BouncingScrollPhysics(),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  title(),
-                  SizedBox(
-                    height: 80,
-                  ),
-                  Container(
-                    margin: EdgeInsets.all(20),
-                    child: Center(
-                      child: Text(
-                        'Please Enter the OTP Sent to your mobile',
-                        style: kSubtitleStyle,
-                        textAlign: TextAlign.center,
-                      ),
+      child: MyContainer(
+        child: Scaffold(
+          body: SafeArea(
+            child: Center(
+              child: SingleChildScrollView(
+                physics: BouncingScrollPhysics(),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    title(),
+                    SizedBox(
+                      height: 80,
                     ),
-                  ),
-                  SizedBox(
-                    height: 20,
-                  ),
-                  Container(
-                    margin: EdgeInsets.symmetric(horizontal: 25),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        otpField(false),
-                        otpField(false),
-                        otpField(false),
-                        otpField(true)
-                      ],
-                    ),
-                  ),
-                  SizedBox(
-                    height: 40,
-                  ),
-                  CustomButton(
-                      containerContent: Center(
+                    Container(
+                      margin: EdgeInsets.all(20),
+                      child: Center(
                         child: Text(
-                          'Check',
-                          style: kTextButtonStyle,
+                          'Please Enter the OTP Sent to your mobile',
+                          style: kSubtitleStyle,
+                          textAlign: TextAlign.center,
                         ),
                       ),
-                      onPress: () {
-                        checkOTP(otp);
-                      }),
-                ],
+                    ),
+                    SizedBox(
+                      height: 20,
+                    ),
+                    Container(
+                      margin: EdgeInsets.symmetric(horizontal: 25),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          otpField(false),
+                          otpField(false),
+                          otpField(false),
+                          otpField(true)
+                        ],
+                      ),
+                    ),
+                    SizedBox(
+                      height: 40,
+                    ),
+                    CustomButton(
+                        containerContent: Center(
+                          child: Text(
+                            'Check',
+                            style: kTextButtonStyle,
+                          ),
+                        ),
+                        onPress: () {
+                          checkOTP(otp);
+                        }),
+                  ],
+                ),
               ),
             ),
           ),

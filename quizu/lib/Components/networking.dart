@@ -1,4 +1,4 @@
-// ignore_for_file: avoid_print
+// ignore_for_file: avoid_print, control_flow_in_finally
 
 import 'dart:convert';
 
@@ -21,30 +21,31 @@ class NetworkingHelper {
     bool success = false;
     SharedPreferences prefs = await SharedPreferences.getInstance();
     myToken = prefs.getString('token');
-    http.Response res = await http
-        .get(Uri.parse(verifyUrl), headers: {'Authorization': myToken});
-    if (res.statusCode >= 200 || res.statusCode < 400) {
-      dynamic data = await jsonDecode(res.body);
-      success = data['success'];
+
+    try {
+      http.Response res = await http
+          .get(Uri.parse(verifyUrl), headers: {'Authorization': myToken});
+      if (res.statusCode >= 200 || res.statusCode < 400) {
+        dynamic data = await jsonDecode(res.body);
+        success = data['success'];
+      }
+    } finally {
+      return success;
     }
-    return success;
   }
 
   Future<dynamic> login(String otp, String mobile) async {
-    print(mobile);
-    print(otp);
     http.Response res = await http
         .post(Uri.parse(loginUrl), body: {'OTP': otp, 'mobile': '0$mobile'});
     // .post(Uri.parse(loginUrl), body: {'OTP': '0000', 'mobile': '09'});
     if (res.statusCode >= 200 || res.statusCode < 400) {
       dynamic data = await jsonDecode(res.body);
-      print(data);
       myToken = data['token'];
-      print(myToken);
       SharedPreferences prefs = await SharedPreferences.getInstance();
       await prefs.setString('token', myToken);
       return jsonDecode(res.body);
     }
+    return res.statusCode;
   }
 
   Future<dynamic> registerName(String name) async {
@@ -53,6 +54,7 @@ class NetworkingHelper {
     if (res.statusCode >= 200 || res.statusCode < 400) {
       return jsonDecode(res.body);
     }
+    return res.statusCode;
   }
 
   Future<dynamic> getTopTen() async {
@@ -61,6 +63,7 @@ class NetworkingHelper {
     if (res.statusCode >= 200 || res.statusCode < 400) {
       return jsonDecode(res.body);
     }
+    return res.statusCode;
   }
 
   Future<dynamic> getUserInfo() async {
@@ -68,9 +71,8 @@ class NetworkingHelper {
         await http.get(Uri.parse(infoUrl), headers: {'Authorization': myToken});
     if (res.statusCode >= 200 || res.statusCode < 400) {
       return jsonDecode(res.body);
-    } else {
-      print(res.statusCode);
     }
+    return res.statusCode;
   }
 
   dynamic getQuestions() async {
@@ -84,17 +86,15 @@ class NetworkingHelper {
         questions.add(question);
       }
       return questions;
-    } else {
-      print(res.statusCode);
     }
+    return res.statusCode;
   }
 
-  void sendScore(int score) async {
+  Future<dynamic> sendScore(int score) async {
     http.Response res = await http.post(Uri.parse(sendScoreUrl),
         body: {'score': score.toString()}, headers: {'Authorization': myToken});
-    if (res.statusCode >= 200 || res.statusCode < 400) {
-    } else {
-      print(res.statusCode);
+    if (res.statusCode >= 400) {
+      return res.statusCode;
     }
   }
 }

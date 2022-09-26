@@ -8,66 +8,66 @@ const kHourglass = 'QuizU ⏳';
 // const kBackgroundColor = Color(0xFF3C096C);
 // const kBackgroundColor = Color(0xFF421869);
 const kBackgroundColor = Color(0xFF32004f);
-// const kButtonColor = Color(0xFF19104E);
+const kButtonColor = Color(0xFF19104E);
 // const kButtonColor = Color(0xFF4e2c70);
-const kButtonColor = Color(0xFF522882);
+// const kButtonColor = Color(0xFF522882);
 // const kButtonColor = Color(0xFF6818a5);
-// const kAppBarColor = Color(0xFF190E2B);
+const kAppBarColor = Color(0xFF240046);
 // 511f73
 // const kAppBarColor = Color(0xFF431259);
 // const kAppBarColor = Color(0xFF310055);
-const kAppBarColor = Color(0xFF190028);
+// const kAppBarColor = Color(0xFF190028);
 const kBottomAppBar = Color(0xFF6436AE);
 // const kActivated = Color(0xFF5E6AD9);
 const kActivated = Color(0xFF9f21e3);
 const kInActivated = Color(0xFF636365);
 
 const kAppBarStyle = TextStyle(
-  fontSize: 32.0,
-  fontFamily: 'TitilliumWeb',
+  fontSize: 28.0,
+  fontFamily: 'SourceSans',
 );
 var kHintStyle = TextStyle(
-  fontSize: 22,
+  fontSize: 20,
   color: Colors.black45,
-  fontFamily: 'TitilliumWeb',
+  fontFamily: 'SourceSans',
 );
 var kButtonStyle = TextButton.styleFrom(
   backgroundColor: Color.fromARGB(255, 40, 46, 137),
 );
 const kTextButtonStyle = TextStyle(
   color: Colors.white,
-  fontSize: 26,
-  fontFamily: 'TitilliumWeb',
+  fontSize: 24,
+  fontFamily: 'SourceSans',
 );
 const kAnswerButtonStyle = TextStyle(
   color: Colors.white,
-  fontSize: 26,
+  fontSize: 22,
   fontFamily: 'SourceSans',
 );
 const kTextInputStyle = TextStyle(
   color: Colors.black,
-  fontSize: 26,
-  fontFamily: 'TitilliumWeb',
+  fontSize: 22,
+  fontFamily: 'SourceSans',
 );
 const kTextStyle = TextStyle(
   color: Colors.white,
-  fontSize: 36,
-  fontFamily: 'TitilliumWeb',
+  fontSize: 30,
+  fontFamily: 'SourceSans',
 );
 const kInfoStyle = TextStyle(
   color: Colors.white,
-  fontSize: 30,
-  fontFamily: 'TitilliumWeb',
+  fontSize: 28,
+  fontFamily: 'SourceSans',
 );
 const kChallenge = TextStyle(
-  fontSize: 32,
-  fontFamily: 'TitilliumWeb',
+  fontSize: 28,
+  fontFamily: 'SourceSans',
 );
 
 const kNumberStyle = TextStyle(
-  fontSize: 50.0,
+  fontSize: 48.0,
   fontWeight: FontWeight.w900,
-  fontFamily: 'TitilliumWeb',
+  fontFamily: 'SourceSans',
 );
 
 const kQuestion = TextStyle(
@@ -77,20 +77,20 @@ const kQuestion = TextStyle(
 );
 
 const kTitleStyle = TextStyle(
-  fontSize: 58.0,
-  fontFamily: 'TitilliumWeb',
+  fontSize: 50.0,
+  fontFamily: 'SourceSans',
 );
 const kSubtitleStyle = TextStyle(
-  fontSize: 32.0,
-  fontFamily: 'TitilliumWeb',
+  fontSize: 28.0,
+  fontFamily: 'SourceSans',
 );
 const kBodyStyle = TextStyle(
-  fontSize: 22.0,
-  fontFamily: 'TitilliumWeb',
+  fontSize: 20.0,
+  fontFamily: 'SourceSans',
 );
 const kInputStyle = TextStyle(
-  fontSize: 22.0,
-  fontFamily: 'TitilliumWeb',
+  fontSize: 20.0,
+  fontFamily: 'SourceSans',
   color: Colors.black,
 );
 
@@ -101,7 +101,7 @@ const kMyInputDecoration = InputDecoration(
   hintText: 'Mohammad Al Ali',
   hintStyle: TextStyle(
     color: Colors.grey,
-    fontFamily: 'TitilliumWeb',
+    fontFamily: 'SourceSans',
   ),
   border: OutlineInputBorder(
       borderRadius: BorderRadius.all(

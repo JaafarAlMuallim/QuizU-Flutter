@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
 import 'package:phone_number/phone_number.dart';
+import 'package:quizu/Components/my_container.dart';
 import 'package:quizu/Components/new_button.dart';
 import 'package:quizu/constants.dart';
 import 'package:quizu/Components/shared.dart';
@@ -40,95 +41,97 @@ class MobileEntryState extends State<MobileEntry> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: token != null
-          ? QuizMe()
-          : SafeArea(
-              child: Center(
-                child: SingleChildScrollView(
-                  physics: BouncingScrollPhysics(),
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      title(),
-                      SizedBox(height: 120),
-                      Container(
-                        margin: EdgeInsets.all(10),
-                        child: TextField(
-                          keyboardType: TextInputType.number,
-                          // maxLength: 11,
-                          inputFormatters: <TextInputFormatter>[
-                            FilteringTextInputFormatter.digitsOnly,
-                            LengthLimitingTextInputFormatter(11),
-                            MaskTextInputFormatter(
-                                mask: '## ### ####',
-                                filter: {"#": RegExp(r'[0-9]')},
-                                type: MaskAutoCompletionType.eager),
-                          ],
-                          style: kTextInputStyle,
-                          autofocus: true,
-                          decoration: InputDecoration(
-                            prefixIcon: CountryListPick(
-                                theme: CountryTheme(
-                                    isShowFlag: true,
-                                    isShowCode: false,
-                                    isShowTitle: true),
-                                initialSelection: '+966',
-                                useUiOverlay: true,
-                                onChanged: (value) {
-                                  countryCode = value.toString();
-                                }),
-                            contentPadding: EdgeInsets.symmetric(
-                                vertical: 10, horizontal: 10),
-                            hintText: '53 000 0000',
-                            hintStyle: kHintStyle,
-                            filled: true,
-                            fillColor: Colors.white,
-                          ),
-                          // maxLength: ,
-                          onChanged: (value) {
-                            mobileNum = value;
-                          },
-                        ),
-                      ),
-                      SizedBox(height: 60),
-                      CustomButton(
-                          containerContent: Center(
-                            child: Text(
-                              'Start',
-                              style: kTextButtonStyle,
+    return MyContainer(
+      child: Scaffold(
+        body: token != null
+            ? QuizMe()
+            : SafeArea(
+                child: Center(
+                  child: SingleChildScrollView(
+                    physics: BouncingScrollPhysics(),
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        title(),
+                        SizedBox(height: 120),
+                        Container(
+                          margin: EdgeInsets.all(10),
+                          child: TextField(
+                            keyboardType: TextInputType.number,
+                            // maxLength: 11,
+                            inputFormatters: <TextInputFormatter>[
+                              FilteringTextInputFormatter.digitsOnly,
+                              LengthLimitingTextInputFormatter(11),
+                              MaskTextInputFormatter(
+                                  mask: '## ### ####',
+                                  filter: {"#": RegExp(r'[0-9]')},
+                                  type: MaskAutoCompletionType.eager),
+                            ],
+                            style: kTextInputStyle,
+                            autofocus: true,
+                            decoration: InputDecoration(
+                              prefixIcon: CountryListPick(
+                                  theme: CountryTheme(
+                                      isShowFlag: true,
+                                      isShowCode: false,
+                                      isShowTitle: true),
+                                  initialSelection: '+966',
+                                  useUiOverlay: true,
+                                  onChanged: (value) {
+                                    countryCode = value.toString();
+                                  }),
+                              contentPadding: EdgeInsets.symmetric(
+                                  vertical: 10, horizontal: 10),
+                              hintText: '53 000 0000',
+                              hintStyle: kHintStyle,
+                              filled: true,
+                              fillColor: Colors.white,
                             ),
+                            // maxLength: ,
+                            onChanged: (value) {
+                              mobileNum = value;
+                            },
                           ),
-                          onPress: () async {
-                            isValid = await PhoneNumberUtil().validate(
-                                mobileNum.replaceAll(RegExp(r"\s+"), ""),
-                                regionCode: region.code);
-                            if (isValid) {
-                              Navigator.pushReplacement(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (context) => OTPShow(
-                                    mobileNum: mobileNum.replaceAll(
-                                        RegExp(r"\s+"), ''),
+                        ),
+                        SizedBox(height: 60),
+                        CustomButton(
+                            containerContent: Center(
+                              child: Text(
+                                'Start',
+                                style: kTextButtonStyle,
+                              ),
+                            ),
+                            onPress: () async {
+                              isValid = await PhoneNumberUtil().validate(
+                                  mobileNum.replaceAll(RegExp(r"\s+"), ""),
+                                  regionCode: region.code);
+                              if (isValid) {
+                                Navigator.pushReplacement(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => OTPShow(
+                                      mobileNum: mobileNum.replaceAll(
+                                          RegExp(r"\s+"), ''),
+                                    ),
                                   ),
-                                ),
-                              );
-                            } else {
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (context) => ErrorPage(
-                                    text: 'Check Your Phone Number',
+                                );
+                              } else {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => ErrorPage(
+                                      text: 'Check Your Phone Number',
+                                    ),
                                   ),
-                                ),
-                              );
-                            }
-                          }),
-                    ],
+                                );
+                              }
+                            }),
+                      ],
+                    ),
                   ),
                 ),
               ),
-            ),
+      ),
     );
   }
 }

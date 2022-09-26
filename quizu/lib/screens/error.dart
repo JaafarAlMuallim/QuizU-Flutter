@@ -1,6 +1,8 @@
 // ignore_for_file: prefer_const_constructors
 
 import 'package:flutter/material.dart';
+import 'package:lottie/lottie.dart';
+import 'package:quizu/Components/my_container.dart';
 import 'package:quizu/Components/new_button.dart';
 import 'package:quizu/constants.dart';
 
@@ -15,52 +17,54 @@ class ErrorPage extends StatefulWidget {
 class _ErrorPageState extends State<ErrorPage> {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(
-          'Warning',
-          style: kAppBarStyle,
+    return MyContainer(
+      child: Scaffold(
+        appBar: AppBar(
+          title: Text(
+            'Warning',
+            style: kAppBarStyle,
+          ),
+          centerTitle: true,
         ),
-        centerTitle: true,
-      ),
-      body: Center(
-        child: SingleChildScrollView(
-          physics: BouncingScrollPhysics(),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              Container(
+        body: Center(
+          child: SingleChildScrollView(
+            physics: BouncingScrollPhysics(),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                Container(
+                    margin: EdgeInsets.all(30),
+                    child: Lottie.asset(
+                      'animations/Error.json',
+                      height: 170,
+                      width: 175,
+                    )),
+                Container(
                   margin: EdgeInsets.all(30),
-                  child: Image.asset(
-                    'images/warningEmoji.png',
-                    width: 175,
-                    height: 170,
-                  )),
-              Container(
-                margin: EdgeInsets.all(30),
-                child: Padding(
-                  padding: EdgeInsets.all(10),
-                  child: Text(widget.text,
-                      textAlign: TextAlign.center, style: kTextStyle),
-                ),
-              ),
-              Padding(
-                padding: EdgeInsets.all(65),
-                child: CustomButton(
-                  containerContent: Center(
-                    child: Text(
-                      'Start Again',
-                      textAlign: TextAlign.center,
-                      style: kTextButtonStyle,
-                    ),
+                  child: Padding(
+                    padding: EdgeInsets.all(10),
+                    child: Text(widget.text,
+                        textAlign: TextAlign.center, style: kTextStyle),
                   ),
-                  onPress: () {
-                    Navigator.pop(context);
-                  },
                 ),
-              )
-            ],
+                Padding(
+                  padding: EdgeInsets.all(65),
+                  child: CustomButton(
+                    containerContent: Center(
+                      child: Text(
+                        'Start Again',
+                        textAlign: TextAlign.center,
+                        style: kTextButtonStyle,
+                      ),
+                    ),
+                    onPress: () {
+                      Navigator.pop(context);
+                    },
+                  ),
+                )
+              ],
+            ),
           ),
         ),
       ),

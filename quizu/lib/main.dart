@@ -3,6 +3,7 @@
 import 'package:animated_splash_screen/animated_splash_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
+import 'package:quizu/Components/my_container.dart';
 import 'package:quizu/Components/networking.dart';
 import 'package:quizu/Components/spin_kit.dart';
 import 'package:quizu/constants.dart';
@@ -37,8 +38,8 @@ class _MyAppState extends State<MyApp> {
     return MaterialApp(
       theme: ThemeData.dark().copyWith(
         backgroundColor: kBackgroundColor,
-        scaffoldBackgroundColor: kBackgroundColor,
-        // scaffoldBackgroundColor: Colors.transparent,
+        // scaffoldBackgroundColor: kBackgroundColor,
+        scaffoldBackgroundColor: Colors.transparent,
         appBarTheme: const AppBarTheme(backgroundColor: kAppBarColor),
         canvasColor: kAppBarColor,
       ),
@@ -47,11 +48,11 @@ class _MyAppState extends State<MyApp> {
         builder: (buildContext, snapshot) {
           if (snapshot.hasData) {
             if (snapshot.data != null && snapshot.data == true) {
-              return MobileEntry();
+              return QuizMe();
             }
-            return QuizMe();
+            return MobileEntry();
           } else {
-            return Center(child: loading());
+            return MyContainer(child: Center(child: loading()));
           }
         },
       ),
@@ -65,16 +66,18 @@ class SplashScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      home: Scaffold(
-        body: AnimatedSplashScreen(
-          splash: Lottie.asset('animations/Welcome.json'),
-          backgroundColor: kBackgroundColor,
-          splashIconSize: 1200,
-          duration: 1500,
-          splashTransition: SplashTransition.fadeTransition,
-          nextScreen: MyApp(),
-          pageTransitionType: PageTransitionType.rightToLeft,
-          animationDuration: Duration(milliseconds: 1300),
+      home: MyContainer(
+        child: Scaffold(
+          body: AnimatedSplashScreen(
+            splash: Lottie.asset('animations/Welcome.json'),
+            backgroundColor: kBackgroundColor,
+            splashIconSize: 1200,
+            duration: 1500,
+            splashTransition: SplashTransition.fadeTransition,
+            nextScreen: MyApp(),
+            pageTransitionType: PageTransitionType.rightToLeft,
+            animationDuration: Duration(milliseconds: 1300),
+          ),
         ),
       ),
     );
