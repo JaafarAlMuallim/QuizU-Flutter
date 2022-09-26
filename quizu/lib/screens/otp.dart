@@ -14,10 +14,14 @@ class OTPShow extends StatefulWidget {
   State<OTPShow> createState() => _OTPShowState();
 }
 
+final otp1 = TextEditingController();
+final otp2 = TextEditingController();
+final otp3 = TextEditingController();
+final otp4 = TextEditingController();
 String otp = '';
 
 class _OTPShowState extends State<OTPShow> {
-  SizedBox otpField() {
+  SizedBox otpField(bool last) {
     return SizedBox(
       height: 70,
       width: 70,
@@ -25,7 +29,8 @@ class _OTPShowState extends State<OTPShow> {
         onChanged: (value) {
           if (value.length == 1) {
             otp += value;
-            FocusScope.of(context).nextFocus();
+
+            !last ? FocusScope.of(context).nextFocus() : checkOTP();
           }
         },
         style: kBodyStyle,
@@ -37,6 +42,24 @@ class _OTPShowState extends State<OTPShow> {
         ],
       ),
     );
+  }
+
+  void checkOTP() {
+    if (otp == '0000') {
+      otp = '';
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(
+            builder: (context) =>
+                NameEntry(mobileNum: widget.mobileNum, otp: otp)),
+      );
+    } else {
+      otp1.clear();
+      otp2.clear();
+      otp3.clear();
+      otp4.clear();
+      otp = '';
+    }
   }
 
   @override
@@ -72,10 +95,10 @@ class _OTPShowState extends State<OTPShow> {
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        otpField(),
-                        otpField(),
-                        otpField(),
-                        otpField()
+                        otpField(false),
+                        otpField(false),
+                        otpField(false),
+                        otpField(true)
                       ],
                     ),
                   ),
@@ -90,17 +113,7 @@ class _OTPShowState extends State<OTPShow> {
                         ),
                       ),
                       onPress: () {
-                        if (otp == '0000') {
-                          otp = '';
-                          Navigator.pushReplacement(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => NameEntry(
-                                    mobileNum: widget.mobileNum, otp: otp)),
-                          );
-                        } else {
-                          otp = '';
-                        }
+                        checkOTP();
                       }),
                 ],
               ),

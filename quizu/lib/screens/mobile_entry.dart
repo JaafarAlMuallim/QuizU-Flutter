@@ -3,6 +3,7 @@
 import 'package:country_list_pick/country_list_pick.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
 import 'package:phone_number/phone_number.dart';
 import 'package:quizu/Components/new_button.dart';
 import 'package:quizu/constants.dart';
@@ -55,8 +56,14 @@ class MobileEntryState extends State<MobileEntry> {
                         margin: EdgeInsets.all(10),
                         child: TextField(
                           keyboardType: TextInputType.number,
+                          // maxLength: 11,
                           inputFormatters: <TextInputFormatter>[
-                            FilteringTextInputFormatter.digitsOnly
+                            FilteringTextInputFormatter.digitsOnly,
+                            LengthLimitingTextInputFormatter(11),
+                            MaskTextInputFormatter(
+                                mask: '## ### ####',
+                                filter: {"#": RegExp(r'[0-9]')},
+                                type: MaskAutoCompletionType.eager),
                           ],
                           style: kTextInputStyle,
                           autofocus: true,
@@ -78,9 +85,10 @@ class MobileEntryState extends State<MobileEntry> {
                             filled: true,
                             fillColor: Colors.white,
                           ),
-                          maxLength: 9,
+                          // maxLength: ,
                           onChanged: (value) {
                             mobileNum = value;
+                            print(mobileNum);
                           },
                         ),
                       ),
@@ -93,14 +101,16 @@ class MobileEntryState extends State<MobileEntry> {
                             ),
                           ),
                           onPress: () async {
-                            isValid = await PhoneNumberUtil()
-                                .validate(mobileNum, regionCode: region.code);
+                            isValid = await PhoneNumberUtil().validate(
+                                mobileNum.replaceAll(RegExp(r"\s+"), ""),
+                                regionCode: region.code);
                             if (isValid) {
                               Navigator.pushReplacement(
                                 context,
                                 MaterialPageRoute(
                                   builder: (context) => OTPShow(
-                                    mobileNum: mobileNum,
+                                    mobileNum: mobileNum.replaceAll(
+                                        RegExp(r"\s+"), ''),
                                   ),
                                 ),
                               );
