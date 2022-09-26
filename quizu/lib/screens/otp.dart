@@ -29,8 +29,8 @@ class _OTPShowState extends State<OTPShow> {
         onChanged: (value) {
           if (value.length == 1) {
             otp += value;
-
-            !last ? FocusScope.of(context).nextFocus() : checkOTP();
+            print(otp);
+            !last ? FocusScope.of(context).nextFocus() : checkOTP(otp);
           }
         },
         style: kBodyStyle,
@@ -44,9 +44,8 @@ class _OTPShowState extends State<OTPShow> {
     );
   }
 
-  void checkOTP() {
+  void checkOTP(otp) {
     if (otp == '0000') {
-      otp = '';
       Navigator.pushReplacement(
         context,
         MaterialPageRoute(
@@ -113,7 +112,7 @@ class _OTPShowState extends State<OTPShow> {
                         ),
                       ),
                       onPress: () {
-                        checkOTP();
+                        checkOTP(otp);
                       }),
                 ],
               ),

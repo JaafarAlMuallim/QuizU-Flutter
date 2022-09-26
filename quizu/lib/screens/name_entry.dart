@@ -83,6 +83,7 @@ class _NameEntryState extends State<NameEntry> {
                                 style: kTextButtonStyle,
                               )),
                               onPress: () {
+                                print(name);
                                 if (name.isNotEmpty) {
                                   Navigator.pushReplacement(
                                     context,
