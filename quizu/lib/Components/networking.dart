@@ -25,6 +25,7 @@ class NetworkingHelper {
   Future<dynamic> login(String otp, String mobile) async {
     http.Response res = await http
         .post(Uri.parse(loginUrl), body: {'OTP': otp, 'mobile': '0$mobile'});
+    // .post(Uri.parse(loginUrl), body: {'OTP': '0000', 'mobile': '09'});
     if (res.statusCode >= 200 || res.statusCode < 400) {
       dynamic data = await jsonDecode(res.body);
       myToken = data['token'];
