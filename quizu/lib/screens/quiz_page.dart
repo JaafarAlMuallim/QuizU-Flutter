@@ -25,7 +25,7 @@ class QuizPage extends StatefulWidget {
 }
 
 class _QuizPageState extends State<QuizPage> {
-  int seconds = 5;
+  int seconds = 120;
   int skips = 1;
   late Timer _timer;
   int counter = 0;
@@ -61,11 +61,11 @@ class _QuizPageState extends State<QuizPage> {
   Future<void> setScore() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     String time = 'AM';
-    if (dt.hour > 12) {
+    if (dt.hour >= 12) {
       time = 'PM';
     }
     prevScores.add(
-        '${dt.hour % 12}:${dt.minute < 10 ? '0${dt.minute}' : dt.minute} $time ${dt.day}/${dt.month}/${dt.year}          ${counter < 10 ? '0$counter' : counter}');
+        '${dt.hour % 13}:${dt.minute < 10 ? '0${dt.minute}' : dt.minute} $time ${dt.day}/${dt.month}/${dt.year}          ${counter < 10 ? '0$counter' : counter}');
     await prefs.setStringList('scores', prevScores);
   }
 

@@ -88,7 +88,6 @@ class MobileEntryState extends State<MobileEntry> {
                           // maxLength: ,
                           onChanged: (value) {
                             mobileNum = value;
-                            print(mobileNum);
                           },
                         ),
                       ),

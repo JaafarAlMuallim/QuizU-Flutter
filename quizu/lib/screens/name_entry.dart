@@ -37,6 +37,13 @@ class _NameEntryState extends State<NameEntry> {
     });
   }
 
+  nextPage() {
+    Navigator.pushReplacement(
+      context,
+      MaterialPageRoute(builder: (context) => QuizMe()),
+    );
+  }
+
   @override
   void initState() {
     super.initState();
@@ -82,14 +89,11 @@ class _NameEntryState extends State<NameEntry> {
                                 'Done',
                                 style: kTextButtonStyle,
                               )),
-                              onPress: () {
-                                print(name);
+                              onPress: () async {
+                                NetworkingHelper helper = NetworkingHelper();
                                 if (name.isNotEmpty) {
-                                  Navigator.pushReplacement(
-                                    context,
-                                    MaterialPageRoute(
-                                        builder: (context) => QuizMe()),
-                                  );
+                                  await helper.registerName(name);
+                                  nextPage();
                                 } else {
                                   Navigator.push(
                                     context,

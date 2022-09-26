@@ -44,13 +44,14 @@ class _OTPShowState extends State<OTPShow> {
     );
   }
 
-  void checkOTP(otp) {
-    if (otp == '0000') {
+  void checkOTP(passedOtp) {
+    if (passedOtp == '0000') {
+      otp = '';
       Navigator.pushReplacement(
         context,
         MaterialPageRoute(
             builder: (context) =>
-                NameEntry(mobileNum: widget.mobileNum, otp: otp)),
+                NameEntry(mobileNum: widget.mobileNum, otp: passedOtp)),
       );
     } else {
       otp1.clear();

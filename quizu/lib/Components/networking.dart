@@ -41,7 +41,7 @@ class NetworkingHelper {
 
   Future<dynamic> registerName(String name) async {
     http.Response res = await http.post(Uri.parse(nameUrl),
-        body: {'name': 'foo'}, headers: {'Authorization': myToken});
+        body: {'name': name}, headers: {'Authorization': myToken});
     if (res.statusCode >= 200 || res.statusCode < 400) {
       return jsonDecode(res.body);
     }
