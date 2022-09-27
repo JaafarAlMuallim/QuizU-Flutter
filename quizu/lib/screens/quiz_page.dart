@@ -147,9 +147,7 @@ class _QuizPageState extends State<QuizPage> {
                           Row(
                             mainAxisAlignment: MainAxisAlignment.start,
                             children: [
-                              InkWell(
-                                splashColor: Colors.purple,
-                                borderRadius: BorderRadius.circular(25),
+                              GestureDetector(
                                 child: Icon(
                                   Icons.close,
                                   size: 50,

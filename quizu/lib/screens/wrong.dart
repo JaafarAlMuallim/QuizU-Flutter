@@ -29,9 +29,7 @@ class _WrongPageState extends State<WrongPage> {
             body: Column(
           crossAxisAlignment: CrossAxisAlignment.end,
           children: [
-            InkWell(
-                splashColor: Colors.purple,
-                borderRadius: BorderRadius.circular(25),
+            GestureDetector(
                 child: SizedBox(
                   child: Icon(
                     Icons.close,

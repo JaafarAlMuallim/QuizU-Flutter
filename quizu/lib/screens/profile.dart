@@ -83,9 +83,7 @@ class _ShowProfileState extends State<ShowProfile> {
                             Row(
                               mainAxisAlignment: MainAxisAlignment.end,
                               children: [
-                                InkWell(
-                                    splashColor: Colors.purple,
-                                    borderRadius: BorderRadius.circular(25),
+                                GestureDetector(
                                     onTap: () async {
                                       SharedPreferences prefs =
                                           await SharedPreferences.getInstance();
