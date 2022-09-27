@@ -53,7 +53,7 @@ class _ErrorPageState extends State<ErrorPage> {
                   child: CustomButton(
                     containerContent: Center(
                       child: Text(
-                        'Start Again',
+                        'Return Again',
                         textAlign: TextAlign.center,
                         style: kTextButtonStyle,
                       ),

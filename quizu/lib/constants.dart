@@ -69,9 +69,13 @@ const kNumberStyle = TextStyle(
   fontWeight: FontWeight.w900,
   fontFamily: 'SourceSans',
 );
+const kTimerStyle = TextStyle(
+  fontSize: 28.0,
+  fontFamily: 'SourceSans',
+);
 
 const kQuestion = TextStyle(
-  fontSize: 32.0,
+  fontSize: 30.0,
   color: Colors.white,
   fontFamily: 'SourceSans',
 );

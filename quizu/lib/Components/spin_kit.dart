@@ -4,6 +4,6 @@ import 'package:lottie/lottie.dart';
 
 Center loading() {
   return Center(
-    child: Lottie.asset('animations/Loading.json'),
+    child: Lottie.asset('animations/HourGlass.json'),
   );
 }

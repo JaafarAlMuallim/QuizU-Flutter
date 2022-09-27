@@ -17,21 +17,19 @@ const String sendScoreUrl = 'https://quizu.okoul.com/Score';
 class NetworkingHelper {
   static dynamic myToken;
 
-  Future<bool> start() async {
+  Future<dynamic> start() async {
     bool success = false;
     SharedPreferences prefs = await SharedPreferences.getInstance();
     myToken = prefs.getString('token');
 
-    try {
-      http.Response res = await http
-          .get(Uri.parse(verifyUrl), headers: {'Authorization': myToken});
-      if (res.statusCode >= 200 || res.statusCode < 400) {
-        dynamic data = await jsonDecode(res.body);
-        success = data['success'];
-      }
-    } finally {
+    http.Response res = await http
+        .get(Uri.parse(verifyUrl), headers: {'Authorization': myToken});
+    if (res.statusCode >= 200 || res.statusCode < 400) {
+      dynamic data = await jsonDecode(res.body);
+      success = data['success'];
       return success;
     }
+    return res.statusCode;
   }
 
   Future<dynamic> login(String otp, String mobile) async {

@@ -21,6 +21,8 @@ class _LeaderBoardState extends State<LeaderBoard> {
   bool _isLoading = true;
   bool failure = false;
   void getTop() async {
+    tops = [];
+    scores = [];
     NetworkingHelper helper = NetworkingHelper();
     dynamic data = await helper.getTopTen();
     failure = data is int;
@@ -62,42 +64,48 @@ class _LeaderBoardState extends State<LeaderBoard> {
                 ),
                 body: _isLoading
                     ? loading()
-                    : Center(
+                    : RefreshIndicator(
+                        onRefresh: () async => getTop(),
                         child: SingleChildScrollView(
-                          physics: const BouncingScrollPhysics(),
-                          child: Column(
-                            children: [
-                              Center(
-                                child: Text(
-                                  'Leaderboard',
-                                  style: kTitleStyle,
+                          physics: AlwaysScrollableScrollPhysics(),
+                          child: Center(
+                            child: Column(
+                              children: [
+                                SizedBox(
+                                  height: 80,
                                 ),
-                              ),
-                              SizedBox(
-                                height: 40,
-                              ),
-                              Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceAround,
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: tops
-                                          .map((e) => Text(
-                                                e,
-                                                style: kSubtitleStyle,
-                                              ))
-                                          .toList()),
-                                  Column(
-                                      children: scores
-                                          .map((e) => Text(e.toString(),
-                                              style: kSubtitleStyle))
-                                          .toList())
-                                ],
-                              ),
-                            ],
+                                Center(
+                                  child: Text(
+                                    'Leaderboard',
+                                    style: kTitleStyle,
+                                  ),
+                                ),
+                                SizedBox(
+                                  height: 40,
+                                ),
+                                Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceAround,
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Column(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: tops
+                                            .map((e) => Text(
+                                                  e,
+                                                  style: kSubtitleStyle,
+                                                ))
+                                            .toList()),
+                                    Column(
+                                        children: scores
+                                            .map((e) => Text(e.toString(),
+                                                style: kSubtitleStyle))
+                                            .toList())
+                                  ],
+                                ),
+                              ],
+                            ),
                           ),
                         ),
                       ),

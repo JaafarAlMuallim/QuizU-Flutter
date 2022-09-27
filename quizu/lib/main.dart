@@ -7,6 +7,7 @@ import 'package:quizu/Components/my_container.dart';
 import 'package:quizu/Components/networking.dart';
 import 'package:quizu/Components/spin_kit.dart';
 import 'package:quizu/constants.dart';
+import 'package:quizu/screens/error.dart';
 import 'package:quizu/screens/mobile_entry.dart';
 import 'package:quizu/screens/quiz_me.dart';
 import 'package:page_transition/page_transition.dart' show PageTransitionType;
@@ -43,12 +44,14 @@ class _MyAppState extends State<MyApp> {
         appBarTheme: const AppBarTheme(backgroundColor: kAppBarColor),
         canvasColor: kAppBarColor,
       ),
-      home: FutureBuilder<bool>(
+      home: FutureBuilder<dynamic>(
         future: helper.start(),
         builder: (buildContext, snapshot) {
           if (snapshot.hasData) {
             if (snapshot.data != null && snapshot.data == true) {
               return QuizMe();
+            } else if (snapshot.data != null && snapshot is int) {
+              return ErrorPage(text: 'Something Went Wrong!');
             }
             return MobileEntry();
           } else {

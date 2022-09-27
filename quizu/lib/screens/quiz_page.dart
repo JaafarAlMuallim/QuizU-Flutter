@@ -5,6 +5,7 @@ import 'dart:ui';
 
 import 'package:flutter/material.dart';
 import 'package:quizu/Components/answers.dart';
+import 'package:quizu/Components/custom_route.dart';
 import 'package:quizu/Components/my_container.dart';
 import 'package:quizu/Components/networking.dart';
 import 'package:quizu/Components/new_button.dart';
@@ -13,6 +14,7 @@ import 'package:quizu/Components/spin_kit.dart';
 import 'package:quizu/constants.dart';
 import 'package:quizu/screens/error.dart';
 import 'package:quizu/screens/finsihed_screen.dart';
+import 'package:quizu/screens/quiz_me.dart';
 import 'package:quizu/screens/wrong.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -143,13 +145,48 @@ class _QuizPageState extends State<QuizPage> {
                     ? loading()
                     : Column(
                         children: [
-                          LinearProgressIndicator(
-                            value: seconds / 120,
-                            color: seconds < 30 ? Colors.red : Colors.green,
-                            minHeight: 3,
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            children: [
+                              GestureDetector(
+                                child: Icon(
+                                  Icons.close,
+                                  size: 50,
+                                ),
+                                onTap: () => Navigator.pushReplacement(
+                                    context,
+                                    CustomRoute(
+                                        child: QuizMe(),
+                                        direction: AxisDirection.left)),
+                              ),
+                            ],
                           ),
                           SizedBox(
-                            height: 20,
+                            height: 60,
+                            child: Stack(
+                              children: [
+                                Center(
+                                  child: Center(
+                                    child: Transform.scale(
+                                      scale: 2.5,
+                                      child: CircularProgressIndicator(
+                                        value: seconds / 120,
+                                        color: seconds < 30
+                                            ? Colors.red
+                                            : Colors.green,
+                                        strokeWidth: 3,
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                                Center(
+                                  child: Text(
+                                    intToTimeLeft(seconds),
+                                    style: kTimerStyle,
+                                  ),
+                                ),
+                              ],
+                            ),
                           ),
                           Center(
                             child: SingleChildScrollView(
@@ -157,21 +194,20 @@ class _QuizPageState extends State<QuizPage> {
                               child: Center(
                                 child: Column(
                                   children: [
-                                    Center(
-                                      child: Text(
-                                        intToTimeLeft(seconds),
-                                        style: kNumberStyle,
+                                    SizedBox(
+                                      height: 30,
+                                    ),
+                                    Text(
+                                      '${Quiz.current + 1} / $length',
+                                      style: TextStyle(
+                                        fontFeatures: [
+                                          FontFeature.subscripts(),
+                                        ],
                                       ),
                                     ),
-                                    Text('${Quiz.current + 1} / $length',
-                                        style: TextStyle(
-                                          fontFeatures: [
-                                            FontFeature.subscripts(),
-                                          ],
-                                        )),
                                     SizedBox(
                                       width: 400,
-                                      height: 120,
+                                      height: 100,
                                       child: Center(
                                         child: AnimatedSwitcher(
                                           duration:
@@ -184,9 +220,6 @@ class _QuizPageState extends State<QuizPage> {
                                           ),
                                         ),
                                       ),
-                                    ),
-                                    SizedBox(
-                                      height: 20,
                                     ),
                                     Container(
                                       margin: EdgeInsets.only(top: 15),
@@ -234,31 +267,33 @@ class _QuizPageState extends State<QuizPage> {
                                     Visibility(
                                       visible: skips == 1,
                                       child: CustomButton(
-                                          containerContent: Row(
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.center,
-                                            children: [
-                                              Text(
-                                                'Skip 🔥',
-                                                style: kTextButtonStyle,
+                                        containerContent: Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.center,
+                                          children: [
+                                            Text(
+                                              // 'Skip 🔥',
+                                              'Skip ',
+                                              style: kAnswerButtonStyle,
+                                            ),
+                                            Text(
+                                              '(1 remaining)',
+                                              style: TextStyle(
+                                                fontFeatures: [
+                                                  FontFeature.subscripts(),
+                                                ],
                                               ),
-                                              Text(
-                                                '(1 remaining)',
-                                                style: TextStyle(
-                                                  fontFeatures: [
-                                                    FontFeature.subscripts(),
-                                                  ],
-                                                ),
-                                              ),
-                                            ],
-                                          ),
-                                          onPress: () {
-                                            setState(() {
-                                              skips--;
-                                              updateData();
-                                            });
-                                          },
-                                          color: Color(0xFF33277B)),
+                                            ),
+                                          ],
+                                        ),
+                                        onPress: () {
+                                          setState(() {
+                                            skips--;
+                                            updateData();
+                                          });
+                                        },
+                                        color: Color(0xFF33277B),
+                                      ),
                                     )
                                   ],
                                 ),
