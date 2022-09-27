@@ -41,7 +41,6 @@ class _QuizPageState extends State<QuizPage> {
 
   String intToTimeLeft(int seconds) {
     int min = seconds ~/ 60;
-
     int second = seconds - (min * 60);
     return '${min > 0 ? "0$min:" : ''}${second < 10 ? '0$second' : second}';
   }
@@ -148,7 +147,9 @@ class _QuizPageState extends State<QuizPage> {
                           Row(
                             mainAxisAlignment: MainAxisAlignment.start,
                             children: [
-                              GestureDetector(
+                              InkWell(
+                                splashColor: Colors.purple,
+                                borderRadius: BorderRadius.circular(25),
                                 child: Icon(
                                   Icons.close,
                                   size: 50,
@@ -166,16 +167,14 @@ class _QuizPageState extends State<QuizPage> {
                             child: Stack(
                               children: [
                                 Center(
-                                  child: Center(
-                                    child: Transform.scale(
-                                      scale: 2.5,
-                                      child: CircularProgressIndicator(
-                                        value: seconds / 120,
-                                        color: seconds < 30
-                                            ? Colors.red
-                                            : Colors.green,
-                                        strokeWidth: 3,
-                                      ),
+                                  child: Transform.scale(
+                                    scale: 2.5,
+                                    child: CircularProgressIndicator(
+                                      value: seconds / 120,
+                                      color: seconds < 30
+                                          ? Colors.red
+                                          : Colors.green,
+                                      strokeWidth: 3,
                                     ),
                                   ),
                                 ),
@@ -272,8 +271,7 @@ class _QuizPageState extends State<QuizPage> {
                                               MainAxisAlignment.center,
                                           children: [
                                             Text(
-                                              // 'Skip 🔥',
-                                              'Skip ',
+                                              'Skip 🔥',
                                               style: kAnswerButtonStyle,
                                             ),
                                             Text(

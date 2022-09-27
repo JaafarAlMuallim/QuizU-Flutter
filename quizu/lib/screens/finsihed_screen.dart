@@ -45,7 +45,9 @@ class _FinishedScreenState extends State<FinishedScreen> {
           body: Column(
             crossAxisAlignment: CrossAxisAlignment.end,
             children: [
-              GestureDetector(
+              InkWell(
+                  splashColor: Colors.purple,
+                  borderRadius: BorderRadius.circular(25),
                   child: SizedBox(
                     child: Icon(
                       Icons.close,
@@ -87,7 +89,9 @@ class _FinishedScreenState extends State<FinishedScreen> {
                   SizedBox(
                     height: 30,
                   ),
-                  GestureDetector(
+                  InkWell(
+                    splashColor: Colors.purple,
+                    borderRadius: BorderRadius.circular(25),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: const [

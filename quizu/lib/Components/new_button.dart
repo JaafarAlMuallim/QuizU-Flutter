@@ -13,7 +13,9 @@ class CustomButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
+    return InkWell(
+      splashColor: Colors.purple,
+      borderRadius: BorderRadius.circular(25),
       onTap: onPress,
       child: Container(
         width: 250.0,
