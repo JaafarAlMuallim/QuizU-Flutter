@@ -1,10 +1,8 @@
 // ignore_for_file: prefer_const_constructors, use_build_context_synchronously
 
-import 'package:country_list_pick/country_list_pick.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
-import 'package:phone_number/phone_number.dart';
+// import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
+import 'package:phone_number/phone_number.dart' as number;
 import 'package:quizu/Components/my_container.dart';
 import 'package:quizu/Components/new_button.dart';
 import 'package:quizu/constants.dart';
@@ -13,6 +11,7 @@ import 'package:quizu/screens/error.dart';
 import 'package:quizu/screens/otp.dart';
 import 'package:quizu/screens/quiz_me.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:intl_phone_number_input/intl_phone_number_input.dart';
 
 class MobileEntry extends StatefulWidget {
   const MobileEntry({super.key});
@@ -26,7 +25,8 @@ class MobileEntryState extends State<MobileEntry> {
   String mobileNum = '';
   String countryCode = '966';
   bool isValid = false;
-  RegionInfo region = RegionInfo(name: 'Saudi Arabia', code: 'SA', prefix: 966);
+  number.RegionInfo region =
+      number.RegionInfo(name: 'Saudi Arabia', code: 'SA', prefix: 966);
 
   void getData() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
@@ -54,44 +54,24 @@ class MobileEntryState extends State<MobileEntry> {
                       children: [
                         title(),
                         SizedBox(height: 120),
-                        Container(
-                          margin: EdgeInsets.all(10),
-                          child: TextField(
-                            keyboardType: TextInputType.number,
-                            // maxLength: 11,
-                            inputFormatters: <TextInputFormatter>[
-                              FilteringTextInputFormatter.digitsOnly,
-                              LengthLimitingTextInputFormatter(11),
-                              MaskTextInputFormatter(
-                                  mask: '## ### ####',
-                                  filter: {"#": RegExp(r'[0-9]')},
-                                  type: MaskAutoCompletionType.eager),
-                            ],
-                            style: kTextInputStyle,
-                            autofocus: true,
-                            decoration: InputDecoration(
-                              prefixIcon: CountryListPick(
-                                  theme: CountryTheme(
-                                      isShowFlag: true,
-                                      isShowCode: false,
-                                      isShowTitle: true),
-                                  initialSelection: '+966',
-                                  useUiOverlay: true,
-                                  onChanged: (value) {
-                                    countryCode = value.toString();
-                                  }),
-                              contentPadding: EdgeInsets.symmetric(
-                                  vertical: 10, horizontal: 10),
-                              hintText: '53 000 0000',
-                              hintStyle: kHintStyle,
-                              filled: true,
-                              fillColor: Colors.white,
-                            ),
-                            // maxLength: ,
-                            onChanged: (value) {
-                              mobileNum = value;
-                            },
+                        InternationalPhoneNumberInput(
+                          hintText: '53 000 0000',
+                          textStyle: TextStyle(
+                              color: Colors.white,
+                              fontFamily: 'SourceSans',
+                              fontSize: 20),
+                          selectorTextStyle: TextStyle(
+                            color: Colors.white,
+                            fontFamily: 'SourceSans',
+                            fontSize: 20,
                           ),
+                          initialValue: PhoneNumber(isoCode: 'SA'),
+                          autoFocus: true,
+                          maxLength: 11,
+                          onInputChanged: (value) {
+                            mobileNum = value.phoneNumber!;
+                            // print(mobileNum);
+                          },
                         ),
                         SizedBox(height: 60),
                         CustomButton(
@@ -102,16 +82,14 @@ class MobileEntryState extends State<MobileEntry> {
                               ),
                             ),
                             onPress: () async {
-                              isValid = await PhoneNumberUtil().validate(
-                                  mobileNum.replaceAll(RegExp(r"\s+"), ""),
-                                  regionCode: region.code);
+                              isValid = await number.PhoneNumberUtil()
+                                  .validate(mobileNum);
                               if (isValid) {
                                 Navigator.pushReplacement(
                                   context,
                                   MaterialPageRoute(
                                     builder: (context) => OTPShow(
-                                      mobileNum: mobileNum.replaceAll(
-                                          RegExp(r"\s+"), ''),
+                                      mobileNum: mobileNum,
                                     ),
                                   ),
                                 );

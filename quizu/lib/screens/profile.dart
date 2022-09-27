@@ -35,6 +35,7 @@ class _ShowProfileState extends State<ShowProfile> {
     failure = data is int;
     name = data['name'];
     mobile = data['mobile'];
+    mobile = mobile.replaceAll('+966', '');
     if (mounted) {
       setState(() {
         _isLoading = false;

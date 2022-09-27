@@ -21,15 +21,18 @@ class NetworkingHelper {
     bool success = false;
     SharedPreferences prefs = await SharedPreferences.getInstance();
     myToken = prefs.getString('token');
-
-    http.Response res = await http
-        .get(Uri.parse(verifyUrl), headers: {'Authorization': myToken});
-    if (res.statusCode >= 200 || res.statusCode < 400) {
-      dynamic data = await jsonDecode(res.body);
-      success = data['success'];
-      return success;
+    if (myToken != null) {
+      http.Response res = await http
+          .get(Uri.parse(verifyUrl), headers: {'Authorization': myToken});
+      if (res.statusCode >= 200 || res.statusCode < 400) {
+        dynamic data = await jsonDecode(res.body);
+        success = data['success'];
+        return success;
+      } else {
+        return res.statusCode;
+      }
     }
-    return res.statusCode;
+    return success;
   }
 
   Future<dynamic> login(String otp, String mobile) async {

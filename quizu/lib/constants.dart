@@ -28,8 +28,8 @@ const kAppBarStyle = TextStyle(
 );
 var kHintStyle = TextStyle(
   fontSize: 20,
-  color: Colors.black45,
   fontFamily: 'SourceSans',
+  color: Colors.white,
 );
 var kButtonStyle = TextButton.styleFrom(
   backgroundColor: Color.fromARGB(255, 40, 46, 137),
