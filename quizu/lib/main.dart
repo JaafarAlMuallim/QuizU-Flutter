@@ -2,6 +2,7 @@
 
 import 'package:animated_splash_screen/animated_splash_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:lottie/lottie.dart';
 import 'package:quizu/Components/my_container.dart';
 import 'package:quizu/Components/networking.dart';
@@ -13,6 +14,8 @@ import 'package:quizu/screens/quiz_me.dart';
 import 'package:page_transition/page_transition.dart' show PageTransitionType;
 
 void main() {
+  WidgetsFlutterBinding.ensureInitialized();
+  SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
   runApp(const SplashScreen());
 }
 
