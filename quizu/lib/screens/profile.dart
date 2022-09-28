@@ -32,10 +32,12 @@ class _ShowProfileState extends State<ShowProfile> {
     scores = prefs.getStringList('scores')!;
     NetworkingHelper helper = NetworkingHelper();
     dynamic data = await helper.getUserInfo();
-    failure = data is int;
-    name = data['name'];
-    mobile = data['mobile'];
-    mobile = mobile.replaceAll('+966', '');
+    failure = data == false;
+    if (!failure) {
+      name = data['name'];
+      mobile = data['mobile'];
+      mobile = mobile.replaceAll('+966', '');
+    }
     if (mounted) {
       setState(() {
         _isLoading = false;
@@ -59,7 +61,7 @@ class _ShowProfileState extends State<ShowProfile> {
   Widget build(BuildContext context) {
     return failure
         ? ErrorPage(
-            text: 'Something Went Wrong!',
+            text: 'Something Went Wrong!\nCheck Your Internet Connection',
           )
         : SafeArea(
             child: MyContainer(

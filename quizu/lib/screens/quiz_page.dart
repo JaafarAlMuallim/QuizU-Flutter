@@ -117,9 +117,11 @@ class _QuizPageState extends State<QuizPage> {
       prevScores = prefs.getStringList('scores')!;
     }
     dynamic data = await helper.getQuestions();
-    failure = data is int;
-    quiz.createQuiz(data);
-    length = Quiz.length;
+    failure = data == false;
+    if (!failure) {
+      quiz.createQuiz(data);
+      length = Quiz.length;
+    }
   }
 
   @override
@@ -135,7 +137,7 @@ class _QuizPageState extends State<QuizPage> {
   Widget build(BuildContext context) {
     return failure
         ? ErrorPage(
-            text: 'Something Went Wrong!',
+            text: 'Something Went Wrong!\nCheck Your Internet Connection',
           )
         : SafeArea(
             child: MyContainer(

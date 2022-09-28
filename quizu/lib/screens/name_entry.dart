@@ -31,10 +31,11 @@ class _NameEntryState extends State<NameEntry> {
   void getToken() async {
     _isLoading = true;
     dynamic data = await helper.login(widget.otp, widget.mobileNum);
-    failure = data is int;
-    token = data['token'];
-    _newUser = data['message'] == 'user created!';
-    // token = await SharedPrefUtils.saveStr('token', token);
+    failure = data == false;
+    if (!failure) {
+      token = data['token'];
+      _newUser = data['message'] == 'user created!';
+    }
     setState(() {
       _isLoading = false;
     });
@@ -57,7 +58,7 @@ class _NameEntryState extends State<NameEntry> {
   Widget build(BuildContext context) {
     return failure
         ? ErrorPage(
-            text: 'Something Went Wrong!',
+            text: 'Something Went Wrong!\nCheck Your Internet Connection',
           )
         : MyContainer(
             child: Scaffold(

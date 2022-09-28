@@ -26,8 +26,10 @@ class _QuizMeState extends State<QuizMe> {
   void getInfo() async {
     NetworkingHelper helper = NetworkingHelper();
     dynamic data = await helper.getUserInfo();
-    failure = data is int;
-    name = data['name'];
+    failure = data == false;
+    if (!failure) {
+      name = data['name'];
+    }
     if (mounted) {
       setState(() {
         _isLoading = false;
@@ -45,7 +47,7 @@ class _QuizMeState extends State<QuizMe> {
   Widget build(BuildContext context) {
     return failure
         ? ErrorPage(
-            text: 'Something Went Wrong!',
+            text: 'Something Went Wrong!\nCheck Your Internet Connection',
           )
         : SafeArea(
             child: MyContainer(

@@ -25,11 +25,13 @@ class _LeaderBoardState extends State<LeaderBoard> {
     scores = [];
     NetworkingHelper helper = NetworkingHelper();
     dynamic data = await helper.getTopTen();
-    failure = data is int;
-    for (int i = 0; i < 10; i++) {
-      if (data[i]['name'] != null && data[i]['score'] != null) {
-        tops.add(data[i]['name']);
-        scores.add(data[i]['score']);
+    failure = data == false;
+    if (!failure) {
+      for (int i = 0; i < 10; i++) {
+        if (data[i]['name'] != null && data[i]['score'] != null) {
+          tops.add(data[i]['name']);
+          scores.add(data[i]['score']);
+        }
       }
     }
     if (mounted) {
@@ -49,7 +51,7 @@ class _LeaderBoardState extends State<LeaderBoard> {
   Widget build(BuildContext context) {
     return failure
         ? ErrorPage(
-            text: 'Something Went Wrong!',
+            text: 'Something Went Wrong!\nCheck Your Internet Connection',
           )
         : SafeArea(
             child: MyContainer(
