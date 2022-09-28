@@ -8,6 +8,43 @@ import 'package:quizu/Components/spin_kit.dart';
 import 'package:quizu/constants.dart';
 import 'package:quizu/screens/error.dart';
 
+List<Widget> nameAndScoreList(List<String> topNames, List<int> topScores) {
+  List<Widget> row = [];
+  for (int i = 0; i < 10; i++) {
+    row.add(
+      Container(
+        margin: EdgeInsets.symmetric(vertical: 4),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            Spacer(),
+            Expanded(
+              flex: 8,
+              child: Text(
+                topNames[i],
+                style: kSubtitleStyle,
+              ),
+            ),
+            SizedBox(
+              width: 10,
+              height: 8,
+            ),
+            Expanded(
+              flex: 2,
+              child: Text(
+                '${topScores[i] > 10 ? topScores[i] : '0$topScores[i]'}',
+                style: kSubtitleStyle,
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+  return row;
+}
+
 class LeaderBoard extends StatefulWidget {
   const LeaderBoard({super.key});
 
@@ -74,7 +111,7 @@ class _LeaderBoardState extends State<LeaderBoard> {
                             child: Column(
                               children: [
                                 SizedBox(
-                                  height: 80,
+                                  height: 30,
                                 ),
                                 Center(
                                   child: Text(
@@ -83,29 +120,9 @@ class _LeaderBoardState extends State<LeaderBoard> {
                                   ),
                                 ),
                                 SizedBox(
-                                  height: 40,
+                                  height: 30,
                                 ),
-                                Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceAround,
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Column(
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.start,
-                                        children: tops
-                                            .map((e) => Text(
-                                                  e,
-                                                  style: kSubtitleStyle,
-                                                ))
-                                            .toList()),
-                                    Column(
-                                        children: scores
-                                            .map((e) => Text(e.toString(),
-                                                style: kSubtitleStyle))
-                                            .toList())
-                                  ],
-                                ),
+                                ...nameAndScoreList(tops, scores)
                               ],
                             ),
                           ),
