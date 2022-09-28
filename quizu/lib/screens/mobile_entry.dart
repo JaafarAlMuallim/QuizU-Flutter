@@ -82,17 +82,28 @@ class MobileEntryState extends State<MobileEntry> {
                               ),
                             ),
                             onPress: () async {
-                              isValid = await number.PhoneNumberUtil()
-                                  .validate(mobileNum);
-                              if (isValid) {
-                                Navigator.pushReplacement(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (context) => OTPShow(
-                                      mobileNum: mobileNum,
+                              if (mobileNum.length > 9) {
+                                isValid = await number.PhoneNumberUtil()
+                                    .validate(mobileNum);
+                                if (isValid) {
+                                  Navigator.pushReplacement(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) => OTPShow(
+                                        mobileNum: mobileNum,
+                                      ),
                                     ),
-                                  ),
-                                );
+                                  );
+                                } else {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) => ErrorPage(
+                                        text: 'Check Your Phone Number',
+                                      ),
+                                    ),
+                                  );
+                                }
                               } else {
                                 Navigator.push(
                                   context,
