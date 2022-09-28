@@ -37,7 +37,9 @@ List<Widget> nameAndScoreList(List<String> topNames, List<int> topScores) {
                 style: kSubtitleStyle,
               ),
             ),
-            Spacer()
+            SizedBox(
+              width: 10,
+            )
           ],
         ),
       ),
