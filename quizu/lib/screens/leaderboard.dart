@@ -121,7 +121,7 @@ class _LeaderBoardState extends State<LeaderBoard> {
                                   ),
                                 ),
                                 SizedBox(
-                                  height: 30,
+                                  height: 40,
                                 ),
                                 ...nameAndScoreList(tops, scores)
                               ],
