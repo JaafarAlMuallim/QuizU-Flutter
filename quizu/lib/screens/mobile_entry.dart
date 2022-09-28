@@ -70,7 +70,6 @@ class MobileEntryState extends State<MobileEntry> {
                           maxLength: 11,
                           onInputChanged: (value) {
                             mobileNum = value.phoneNumber!;
-                            // print(mobileNum);
                           },
                         ),
                         SizedBox(height: 60),
