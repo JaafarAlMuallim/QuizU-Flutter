@@ -64,12 +64,9 @@ class _QuizPageState extends State<QuizPage> {
 
   Future<void> setScore() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    String time = 'AM';
-    if (dt.hour >= 12) {
-      time = 'PM';
-    }
+    String time = dt.hour >= 12 && dt.hour < 24 ? 'PM' : 'AM';
     prevScores.add(
-        '${dt.hour % 13}:${dt.minute < 10 ? '0${dt.minute}' : dt.minute} $time ${dt.day}/${dt.month}/${dt.year}          ${counter < 10 ? '0$counter' : counter}');
+        '${dt.hour % 12 == 0 ? '00' : dt.hour % 12}:${dt.minute < 10 ? '0${dt.minute}' : dt.minute} $time ${dt.day}/${dt.month}/${dt.year}          ${counter < 10 ? '0$counter' : counter}');
     await prefs.setStringList('scores', prevScores);
   }
 
