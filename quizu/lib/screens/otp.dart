@@ -22,7 +22,7 @@ final otp4 = TextEditingController();
 String otp = '';
 
 class _OTPShowState extends State<OTPShow> {
-  SizedBox otpField(bool last) {
+  SizedBox otpField(bool last, TextEditingController controller) {
     return SizedBox(
       height: 70,
       width: 70,
@@ -36,6 +36,7 @@ class _OTPShowState extends State<OTPShow> {
         style: kBodyStyle,
         keyboardType: TextInputType.number,
         textAlign: TextAlign.center,
+        controller: controller,
         inputFormatters: [
           LengthLimitingTextInputFormatter(1),
           FilteringTextInputFormatter.digitsOnly
@@ -47,6 +48,10 @@ class _OTPShowState extends State<OTPShow> {
   void checkOTP(passedOtp) {
     if (passedOtp == '0000') {
       otp = '';
+      otp1.clear();
+      otp2.clear();
+      otp3.clear();
+      otp4.clear();
       Navigator.pushReplacement(
         context,
         MaterialPageRoute(
@@ -96,10 +101,10 @@ class _OTPShowState extends State<OTPShow> {
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          otpField(false),
-                          otpField(false),
-                          otpField(false),
-                          otpField(true)
+                          otpField(false, otp1),
+                          otpField(false, otp2),
+                          otpField(false, otp3),
+                          otpField(true, otp4)
                         ],
                       ),
                     ),

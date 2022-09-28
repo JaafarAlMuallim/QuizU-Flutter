@@ -111,7 +111,7 @@ class _ShowProfileState extends State<ShowProfile> {
                                   style: kInfoStyle,
                                 ),
                                 Text(
-                                  'Mobile: ${mobile.substring(0, 3)} ${mobile.substring(3, 6)} ${mobile.substring(6)}',
+                                  'Mobile: 0${mobile.substring(0, 2)} ${mobile.substring(2, 5)} ${mobile.substring(5)}',
                                   style: kInfoStyle,
                                 ),
                                 SizedBox(
